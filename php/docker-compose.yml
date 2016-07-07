@@ -1,0 +1,13 @@
+main:
+  build: .
+  ports:
+    - "80:80"
+    - "443:443"
+  volumes:
+    - ./src:/var/www/html/
+  links:
+   - "db"
+db:
+  image: learnx-mysql
+  environment:
+    - "MYSQL_ROOT_PASSWORD=root"
