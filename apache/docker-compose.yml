@@ -4,7 +4,7 @@ apache:
     - "8000:80"
     - "443:443"
   volumes:
-    - ./src:/var/www/html/
+    - .:/app
   links:
    - "db"
 phpmyadmin:

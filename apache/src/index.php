@@ -20,7 +20,7 @@
         <![endif]-->
 
         <!-- Add your site or application content here -->
-        <h1>Streams</h1>
+        <h1>Streams!</h1>
         <?php
           require_once($_SERVER['DOCUMENT_ROOT'].'/php/DatabaseManager.php');
 
