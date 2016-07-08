@@ -1,0 +1,25 @@
+apache:
+  build: .
+  ports:
+    - "8000:80"
+    - "443:443"
+  volumes:
+    - ./src:/var/www/html/
+  links:
+   - "db"
+phpmyadmin:
+  image: learnx-phpmyadmin
+  ports:
+    - "8080:80"
+  links:
+    - "db"
+nodejs:
+  image: learnx-nodejs
+  ports:
+    - "3000:3000"
+db:
+  image: learnx-mysql
+  environment:
+    - "MYSQL_ROOT_PASSWORD=root"
+    - "ON_CREATE_DB=learnx"
+    - "STARTUP_SQL=/tmp/dump.sql"

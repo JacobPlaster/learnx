@@ -1,0 +1,13 @@
+{
+  "name": "learnx-nodejs",
+  "version": "1.0.0",
+  "description": "Realtime socket application for use wiht the php main site",
+  "author": "Jacob Plaster <jacob.s.plaster@gmail.com>",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "socket.io": "^1.4.8"
+  }
+}
