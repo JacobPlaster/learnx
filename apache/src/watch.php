@@ -33,6 +33,25 @@
 
         <script src="js/jwplayer/jwplayer.js"></script>
         <script>jwplayer.key="RYbIb4Mn7dHgygUN/h4k+pBmfKz3UGz0E+Lj6w==";</script>
+        <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+
+        <script>
+           var socket = io.connect( 'http://localhost:3000' );
+
+           socket.on('time', function(data) {
+               addMessage(data.time);
+           });
+
+           function addMessage(message) {
+               var text = document.createTextNode(message),
+                   el = document.createElement('li'),
+                   messages = document.getElementById('messages');
+
+               el.appendChild(text);
+               messages.appendChild(el);
+           }
+       </script>
+
     </head>
     <body>
         <!--[if lt IE 8]>
@@ -40,7 +59,7 @@
         <![endif]-->
 
         <!-- Add your site or application content here -->
-        <a href="/learnx-service/index.php">Back</a>
+        <a href="/index.php">Back</a>
         <br>
         <h3>Stream</h3>
         <p>Author = <?php echo($author); ?></p>
@@ -58,13 +77,15 @@
          });
          </script>
 
+         <ul id='messages'></ul>
+
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
 
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <!-- Google Analytics: change UA-XXXXX-X to be your sitss ID. -->
         <script>
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
             function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;

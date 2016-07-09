@@ -3,8 +3,6 @@ apache:
   ports:
     - "8000:80"
     - "443:443"
-  volumes:
-    - .:/app
   links:
    - "db"
 phpmyadmin:

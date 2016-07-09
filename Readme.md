@@ -16,3 +16,11 @@ Basic Docker Commands:
   ## Built and run php server
   - docker build -t learn-php .
   - docker run --name learnx-php -d --link learnx-mysql:db -p 80:80 learnx/php-server
+
+
+
+ ## TODO
+  - Create node chat stream
+  - Connect chat stream with stream
+  - Improve communication between RED5 and PHP
+  - Create UI for stream generation

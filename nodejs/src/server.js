@@ -1,10 +1,29 @@
-'use strict';
+var express = require('express'),
+    app = express()
+  , http = require('http')
+  , server = http.createServer(app)
+  , io = require('socket.io').listen(server);
 
-// Constraints
 var PORT = 3000;
 
-var io = require('socket.io')();
-io.on('connection', function(socket){});
-io.listen(PORT);
+io.sockets.on( 'connection', function( client ) {
+	console.log( "New client !" );
 
-console.log('Running on localhost:' + PORT);
+	client.on( 'message', function( data ) {
+		console.log( 'Message received ' + data.name + ":" + data.message );
+
+		//client.broadcast.emit( 'message', { name: data.name, message: data.message } );
+		io.sockets.emit( 'message', { name: data.name, message: data.message } );
+	});
+});
+
+// Send current time to all connected clients
+function sendTime() {
+    io.emit('time', { time: new Date().toJSON() });
+}
+
+// Send current time every 10 secs
+setInterval(sendTime, 10000);
+
+// listen for new web clients:
+server.listen(PORT);
