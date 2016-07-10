@@ -1,30 +1,11 @@
 <?php
 class DatabaseManager {
-
-    private $LAN_SERVER_PC = "192.168.0.11";
-    private $LAN_SERVER_MAC = "192.168.0.13";
-    private $LOCAL_SERVER = "localhost";
-    // Databse
-    //private $PORT = "8889";
-    private $PORT = "3306";
-    private $DATABASE_HOST = "db";
-    private $DATABASE_USERNAME = "root";
-    private $DATABASE_PASSWORD = "root";
-    private $DATABASE = "learnx";
     // Tables
     private $USERS_TABLE = "users";
     private $STREAMS_TABLE = "streams";
 
     private $conn = NULL;
-
-
-    function getRed5ServerUrl($username)
-    {
-      $RED5_SERVER = $this->LAN_SERVER_PC;
-      //$RED5_SERVER = $this->LAN_SERVER_MAC;
-      return "rtmp://".$RED5_SERVER."/stream/".$username."";
-    }
-
+    
     /**
      *
      * Connects the service to the mysql database
@@ -34,8 +15,11 @@ class DatabaseManager {
      */
     function connect()
     {
-      $server = $this->DATABASE_HOST.":".$this->PORT;
-      $this->conn = new mysqli($server, $this->DATABASE_USERNAME, $this->DATABASE_PASSWORD, $this->DATABASE);
+      // cfg.php
+      global $SERVER_CFG;
+
+      $server = $SERVER_CFG['MYSQL_HOST'].":".$SERVER_CFG['MYSQL_PORT'];
+      $this->conn = new mysqli($server, $SERVER_CFG['MYSQL_USER'], $SERVER_CFG['MYSQL_PWD'], $SERVER_CFG['MYSQL_DATABSE_NAME']);
       if ($this->conn->connect_error) {
         die("Failed to connect to ".$server."  --  " . $this->conn->connect_error);
       }
