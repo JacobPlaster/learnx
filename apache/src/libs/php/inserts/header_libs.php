@@ -4,4 +4,3 @@
 <link rel="stylesheet" href="<?php echo($SERVER_PATH['libs-css']) ?>/normalize.css">
 <link rel="stylesheet" href="<?php echo($SERVER_PATH['libs-css']) ?>/main.css">
 <script src="<?php echo($SERVER_PATH['libs-javascript']) ?>/vendor/modernizr-2.8.3.min.js"></script>
-<script src="http://content.jwplatform.com/libraries/DH7EyvON.js"></script>

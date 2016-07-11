@@ -40,20 +40,22 @@
           <p>Author = <?php echo($author); ?></p>
           <p>Title = <?php echo($stream['title']); ?></p>
           <p>Description = <?php echo($stream['description']); ?></p>
-          <div id="embed_player"></div>
-           <script type='text/javascript'>
-           var playerInstance = jwplayer("embed_player");
-             playerInstance.setup({
-             <?php echo("'file': 'rtmp://".$MEDIA_SERVER['HOST'].":".$MEDIA_SERVER['PORT']."/stream/".$author."',") ?>
-             'primary': "flash",
-             'image': "http://content.jwplatform.com/videos/nhYDGoyh-kNspJqnJ.mp4",
-             'width':'640',
-             'height':'360'
-           });
-           </script>
-         </div>
 
-         <?php include($SERVER_PATH['inserts-footer-libs']); ?>
-         <?php include($SERVER_PATH['inserts-google-analytics']); ?>
+          <?php
+            $STREAM_TARGET_VIDEO = $author;
+            $STREAM_TARGET_CHAT = $author;
+          ?>
+          <?php include($SERVER_PATH['inserts-footer-libs']); ?>
+          <?php include($SERVER_PATH['inserts-google-analytics']); ?>
+          <div class="row-fluid">
+            <div class="col-md-7">
+              <?php include($SERVER_PATH['inserts-stream-video']); ?>
+            </div>
+            <div class="col-md-5">
+              <?php include($SERVER_PATH['inserts-stream-chat']); ?>
+            </div>
+           </div> <!-- Closing row -->
+
+         </div> <!-- Closing container -->
     </body>
 </html>

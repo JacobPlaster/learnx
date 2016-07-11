@@ -9,6 +9,9 @@
   $SERVER_CFG['MYSQL_USER'] = "root";
   $SERVER_CFG['MYSQL_PWD'] = "root";
   $SERVER_CFG['MYSQL_DATABSE_NAME'] = "learnx";
+  // Socket (Nodejs soceket.io)
+  $SERVER_CFG['SOCKET_HOST'] = "localhost";
+  $SERVER_CFG['SOCKET_PORT'] = "3000";
 
   $MEDIA_SERVER["HOST"] = "localhost";
   $MEDIA_SERVER["PORT"] = "5000";
@@ -29,4 +32,6 @@
   $SERVER_PATH['inserts-google-analytics'] = $SERVER_PATH['inserts'].'/google_analytics.php';
   $SERVER_PATH['inserts-header-libs'] = $SERVER_PATH['inserts'].'/header_libs.php';
   $SERVER_PATH['inserts-footer-libs'] = $SERVER_PATH['inserts'].'/footer_libs.php';
+  $SERVER_PATH['inserts-stream-video'] = $SERVER_PATH['inserts'].'/stream_video.php';
+  $SERVER_PATH['inserts-stream-chat'] = $SERVER_PATH['inserts'].'/stream_chat.php';
  ?>
