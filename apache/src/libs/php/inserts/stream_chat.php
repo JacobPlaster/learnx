@@ -5,7 +5,7 @@
 
 
    socket.on('new message',function(data) {
-     addMessage(data.message);
+     addMessage(data.username, data.message);
    });
    function addMessage(username, message) {
        var text = document.createTextNode(username + ": "+ message),
@@ -29,8 +29,7 @@
         var message = $("#stream_chat_input").val();
         if(message.length > 2)
         {
-          addMessage(username, $("#stream_chat_input").val());
-          socket.emit("send message");
+          socket.emit("send message", {username:username, message:message});
           // clear
           $("#stream_chat_input").val("");
         }
