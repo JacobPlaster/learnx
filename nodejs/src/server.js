@@ -2,9 +2,17 @@ var express = require('express'),
     app = express()
   , http = require('http')
   , server = http.createServer(app)
-  , io = require('socket.io').listen(server);
+  , io = require('socket.io').listen(server)
+  , redis = require('redis');
 
 var PORT = 3000;
+
+// connect to redis
+var client = redis.createClient('6379', 'redis');
+
+client.on('connect', function() {
+    console.log('connected to redis');
+});
 
 io.sockets.on( 'connection', function( client ) {
 	console.log( "New client !" );

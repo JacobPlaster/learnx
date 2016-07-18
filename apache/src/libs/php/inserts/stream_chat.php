@@ -30,7 +30,7 @@
         if(message.length > 2)
         {
           socket.emit("send message", {username:username, message:message});
-          addMessage(username, message);
+          //addMessage(username, message);
           // clear
           $("#stream_chat_input").val("");
         }

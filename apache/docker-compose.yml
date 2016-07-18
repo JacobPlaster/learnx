@@ -5,6 +5,7 @@ apache:
     - "443:443"
   links:
    - "db"
+   - "redis"
 phpmyadmin:
   image: learnx-phpmyadmin
   ports:
@@ -15,9 +16,15 @@ nodejs:
   image: learnx-nodejs
   ports:
     - "3000:3000"
+  links:
+    - "redis"
 db:
   image: learnx-mysql
   environment:
     - "MYSQL_ROOT_PASSWORD=root"
     - "ON_CREATE_DB=learnx"
     - "STARTUP_SQL=/tmp/dump.sql"
+redis:
+  image: learnx-redis
+  ports:
+    - "6379:6379"
