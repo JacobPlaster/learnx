@@ -30,6 +30,7 @@
         if(message.length > 2)
         {
           socket.emit("send message", {username:username, message:message});
+          addMessage(username, message);
           // clear
           $("#stream_chat_input").val("");
         }
@@ -39,9 +40,9 @@
 </script>
 
 <div class="stream_chat">
+  <ul id='stream_chat' class="message_area">
+  </ul>
   <div class="message_input">
     <input type="text" id="stream_chat_input">
   </div>
-  <ul id='stream_chat' class="message_area">
-  </ul>
 </div>

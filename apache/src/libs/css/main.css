@@ -38,8 +38,8 @@ body { position:relative;}
 .stream_chat
 {
   width: 100%;
-  background-color: lightgrey;
   height: 360px;
+  background-color: lightgrey;
 }
 .stream_chat input
 {
@@ -51,4 +51,8 @@ body { position:relative;}
   padding: 10px;
   text-decoration: none;
   list-style: none;
+  overflow-y: scroll;
+  height:100%;
+  margin-bottom: -30px;
+  padding-bottom: 35px;
 }
