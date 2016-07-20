@@ -2,9 +2,7 @@
 <?php
   require_once($SERVER_PATH['libs-php'].'/DatabaseManager.php');
   require_once($SERVER_PATH['libs-php'].'/error_functions.php');
-
   session_start();
-  $_SESSION['server'] = 'phpisthebest';
 
   // Update database and connect
   $dm = new DatabaseManager;
