@@ -1,20 +1,23 @@
 var express = require('express'),
     app = express()
+  , cookieParser = require('cookie-parser')
   , http = require('http')
   , server = http.createServer(app)
   , io = require('socket.io').listen(server)
   , redis = require('redis')
   , session = require('express-session')
   , redisStore = require('connect-redis')(session)
-  , client = redis.createClient(6379, 'redis', {no_ready_check: true});
+  , client = redis.createClient(6379, 'redis', {no_ready_check: true})
+  , co = require("./cookie.js");
 
 var PORT = 3000;
 
+app.use(cookieParser());
 app.use(session({
     secret: 'sitesecretkey',
     // create new redis store.
     store: new redisStore({ host: 'redis', port: 6379, client: client,  prefix: 'PHPREDIS_SESSION:'}),
-    name: 'PHPREDIS_SESSION',
+    name: 'PHPSESSID',
     saveUninitialized: false,
     resave: false
 }));
