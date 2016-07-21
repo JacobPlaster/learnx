@@ -1,39 +1,36 @@
-var express = require('express'),
-    app = express()
-  , cookieParser = require('cookie-parser')
-  , http = require('http')
-  , server = http.createServer(app)
-  , io = require('socket.io').listen(server)
-  , redis = require('redis')
-  , session = require('express-session')
-  , redisStore = require('connect-redis')(session)
-  , client = redis.createClient(6379, 'redis', {no_ready_check: true})
-  , co = require("./cookie.js");
+var app = require("http").createServer(handler),
+    io = require('socket.io').listen(app),
+    fs = require("fs"),
+    redis = require("redis"),
+    co = require("./cookie.js"),
+    clientSession = new redis.createClient(6379, 'redis', {no_ready_check: true}),
+    querystring = require('querystring');
 
-var PORT = 3000;
+app.listen(3000);
 
-app.use(cookieParser());
-app.use(session({
-    secret: 'sitesecretkey',
-    // create new redis store.
-    store: new redisStore({ host: 'redis', port: 6379, client: client,  prefix: 'PHPREDIS_SESSION:'}),
-    name: 'PHPSESSID',
-    saveUninitialized: false,
-    resave: false
-}));
+//On client incomming, we send back index.html
+function handler(req, res) {
+    //Using php session to retrieve important data from user
+    var cookieManager = new co.cookie(req.headers.cookie);
 
-client.on("error", function (err) {
-    console.log("Redis Client Error: " + err);
-});
+    //Note : to specify host and port : new redis.createClient(HOST, PORT, options)
+    //For default version, you don't need to specify host and port, it will use default one
+    console.log('cookieManager.get("PHPSESSID") = ' + querystring.unescape(cookieManager.get("PHPSESSID")));
+    clientSession.get("sessions/" + querystring.unescape(cookieManager.get("PHPSESSID")), function(error, result) {
+        console.log("error : " + result);
+        if(error) {
+            console.log("error : " + error);
+        }
+        if(result != null) {
+            console.log("result exist");
+            console.log(result.toString());
+        } else {
+            console.log("session does not exist");
+        }
+    });
+}
 
-// test
-app.use(function(req, res, next) {
-    req.session.test = 'Hello from node.js!';
-    req.session.save();
-    console.log("Session: " + JSON.stringify(req.session, null, '  '));
-});
-
-client.on('connect', function() {
+clientSession.on('connect', function() {
     console.log('connected to redis');
 });
 
@@ -47,6 +44,3 @@ io.sockets.on( 'connection', function( client ) {
 		io.sockets.emit('new message', { username: data.username, message: data.message } );
 	});
 });
-
-// listen for new web clients:
-server.listen(PORT);
