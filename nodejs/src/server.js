@@ -6,17 +6,22 @@ var express = require('express'),
   , redis = require('redis')
   , session = require('express-session')
   , redisStore = require('connect-redis')(session)
-  , client = redis.createClient();
+  , client = redis.createClient(6379, 'redis', {no_ready_check: true});
 
 var PORT = 3000;
 
 app.use(session({
-    secret: 'ssshhhhh',
+    secret: 'sitesecretkey',
     // create new redis store.
-    store: new redisStore({ host: 'localhost', port: 6379, client: client,  prefix: 'session:php:'}),
+    store: new redisStore({ host: 'redis', port: 6379, client: client,  prefix: 'PHPREDIS_SESSION:'}),
+    name: 'PHPREDIS_SESSION',
     saveUninitialized: false,
     resave: false
 }));
+
+client.on("error", function (err) {
+    console.log("Redis Client Error: " + err);
+});
 
 // test
 app.use(function(req, res, next) {
