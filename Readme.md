@@ -20,7 +20,6 @@ Basic Docker Commands:
 
 
  ## TODO
-  - Create node chat stream
-  - Connect chat stream with stream
+  - session does not destory in redis
   - Improve communication between RED5 and PHP
   - Create UI for stream generation
