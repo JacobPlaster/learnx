@@ -10,37 +10,39 @@ app.listen(3000);
 
 //On client incomming, we send back index.html
 function handler(req, res) {
-    //Using php session to retrieve important data from user
-    var cookieManager = new co.cookie(req.headers.cookie);
-
-    //Note : to specify host and port : new redis.createClient(HOST, PORT, options)
-    //For default version, you don't need to specify host and port, it will use default one
-    console.log('cookieManager.get("PHPSESSID") = ' + querystring.unescape(cookieManager.get("PHPSESSID")));
-    clientSession.get("sessions/" + querystring.unescape(cookieManager.get("PHPSESSID")), function(error, result) {
-        console.log("error : " + result);
-        if(error) {
-            console.log("error : " + error);
-        }
-        if(result != null) {
-            console.log("result exist");
-            console.log(result.toString());
-        } else {
-            console.log("session does not exist");
-        }
-    });
 }
 
 clientSession.on('connect', function() {
     console.log('connected to redis');
 });
 
+var connect = require('connect');
 io.sockets.on( 'connection', function( client ) {
-	console.log( "New client !" );
+    //Using php session to retrieve important data from user
+    var username = null;
+    var isLoggedIn = false;
+    var cookieManager = new co.cookie(client.request.headers.cookie);
+
+    clientSession.get("sessions/" + querystring.unescape(cookieManager.get("PHPSESSID")), function(error, result) {
+        if(error) {
+            console.log("error : " + error);
+        }
+        if(result != null) {
+          var session_r = JSON.parse(result);
+            username = session_r.username;
+            console.log("GOT: " + session_r.username);
+            isLoggedIn = true;
+        } else {
+            console.log("session does not exist");
+        }
+    });
 
 	client.on( 'send message', function( data ) {
-		console.log( 'Message received ' + data.username + ":" + data.message );
-
-		//client.broadcast.emit( 'message', { name: data.name, message: data.message } );
-		io.sockets.emit('new message', { username: data.username, message: data.message } );
+    if(isLoggedIn && username != null)
+    {
+  		console.log( 'Message received ' + username + ":" + data.message );
+  		//client.broadcast.emit( 'message', { name: data.name, message: data.message } );
+  		io.sockets.emit('new message', { username: username, message: data.message } );
+    }
 	});
 });

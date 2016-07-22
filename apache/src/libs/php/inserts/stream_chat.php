@@ -1,9 +1,6 @@
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script>
    var socket = io.connect("http://<?php echo($SERVER_CFG['SOCKET_HOST'].':'.$SERVER_CFG['SOCKET_PORT']); ?>");
-   var username;
-
-
    socket.on('new message',function(data) {
      addMessage(data.username, data.message);
    });
@@ -27,13 +24,10 @@
       // enter key pressed
       if(event.which === 13){
         var message = $("#stream_chat_input").val();
-        if(message.length > 2)
-        {
-          socket.emit("send message", {username:username, message:message});
-          addMessage(username, message);
-          // clear
-          $("#stream_chat_input").val("");
-        }
+        socket.emit("send message", {message:message});
+        //addMessage(username, message);
+        // clear
+        $("#stream_chat_input").val("");
       }
     });
   });

@@ -5,16 +5,10 @@ include $SERVER_PATH['libs-php'].'/redis.php';
 
 session_start();
 
-$_SESSION['username'] = "jacobTest1";
-$_SESSION["sess_id"] = $sess_id;
-$_SESSION["Hmac"] = $hmac;
+$_SESSION['username'] =  $_GET['u'];
 
 echo '<pre>';
 var_dump($_COOKIE);
 echo '</pre>';
-
-echo '$_SESSION["nodejs"] = '.$_SESSION[selfId].'<br>';
-$_SESSION[selfId] = 2;
-echo '$_SESSION["nodejs"] = '.$_SESSION[selfId].'<br>';
 
 ?>
