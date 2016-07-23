@@ -1,14 +1,26 @@
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script>
-   var socket = io.connect("http://<?php echo($SERVER_CFG['SOCKET_HOST'].':'.$SERVER_CFG['SOCKET_PORT']); ?>");
+   var socket = io.connect("http://<?php echo($SERVER_CFG['SOCKET_HOST'].':'.$SERVER_CFG['SOCKET_PORT']); ?>",
+    { query: '<?php echo("r_var=".$author) ?>' });
    socket.on('new message',function(data) {
      addMessage(data.username, data.message);
+   });
+   socket.on('error',function(data) {
+     addErrror(data.message);
    });
    function addMessage(username, message) {
        var text = document.createTextNode(username + ": "+ message),
            el = document.createElement('li'),
            messages = document.getElementById('stream_chat');
        el.appendChild(text);
+       messages.appendChild(el);
+   }
+   function addError(message) {
+       var text = document.createTextNode("Error: "+ message),
+           el = document.createElement('li'),
+           messages = document.getElementById('stream_chat');
+       el.appendChild(text);
+       el.className = "chatError";
        messages.appendChild(el);
    }
    function setUsername(newUsername)

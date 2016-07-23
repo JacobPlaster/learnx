@@ -18,6 +18,10 @@ clientSession.on('connect', function() {
 
 var connect = require('connect');
 io.sockets.on( 'connection', function( client ) {
+    var room = client.handshake['query']['r_var'];
+    client.join(room);
+    console.log('user joined room #'+room);
+
     //Using php session to retrieve important data from user
     var username = null;
     var isLoggedIn = false;
@@ -34,15 +38,24 @@ io.sockets.on( 'connection', function( client ) {
             isLoggedIn = true;
         } else {
             console.log("session does not exist");
+            io.to(client).emit('error', { message: "Please log in to send messages." } );
         }
     });
 
 	client.on( 'send message', function( data ) {
     if(isLoggedIn && username != null)
     {
+      data.message =  querystring.escape(data.message);
   		console.log( 'Message received ' + username + ":" + data.message );
   		//client.broadcast.emit( 'message', { name: data.name, message: data.message } );
-  		io.sockets.emit('new message', { username: username, message: data.message } );
+  		io.to(room).emit('new message', { username: username, message: data.message } );
+    } else {
+      io.to(client).emit('error', { message: "Please log in to send messages." } );
     }
 	});
+
+  client.on('disconnect', function() {
+   client.leave(room)
+   console.log('user disconnected');
+ });
 });
