@@ -8,7 +8,10 @@
      addMessage(data.username, data.message);
    });
    socket.on('error',function(data) {
-     addEreror(data.message);
+     addError(data.message);
+   });
+   socket.on('info',function(data) {
+     addInfo(data.message);
    });
 
 

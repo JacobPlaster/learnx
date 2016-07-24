@@ -2,10 +2,10 @@
 class DatabaseManager {
     // Tables
     private $USERS_TABLE = "users";
-    private $STREAMS_TABLE = "streams";
+    private $STREAMS_VIDEO_TABLE = "stream_video";
 
     private $conn = NULL;
-    
+
     /**
      *
      * Connects the service to the mysql database
@@ -76,7 +76,7 @@ class DatabaseManager {
     {
       $title = $this->conn->real_escape_string($title);
       $description = $this->conn->real_escape_string($description);
-      $query_string = "INSERT INTO ".$this->STREAMS_TABLE."
+      $query_string = "INSERT INTO ".$this->STREAMS_VIDEO_TABLE."
       (user_id, title, description, category_id)
       VALUES ('$user_id', '$title', '$description', '$category_id')";
       $result = $this->conn->query($query_string);
@@ -95,7 +95,7 @@ class DatabaseManager {
     function removeStream($user_id)
     {
       //MySqli Delete Query
-      $query_string = "DELETE FROM ".$this->STREAMS_TABLE." WHERE user_id='$user_id'";
+      $query_string = "DELETE FROM ".$this->STREAMS_VIDEO_TABLE." WHERE user_id='$user_id'";
       $result = $this->conn->query($query_string);
 
       if(!$results){
@@ -112,7 +112,7 @@ class DatabaseManager {
     function getAllLiveStreams()
     {
       $results = array();
-      $ids = $this->conn->query("SELECT user_id, title, description FROM ".$this->STREAMS_TABLE."");
+      $ids = $this->conn->query("SELECT user_id, title, description FROM ".$this->STREAMS_VIDEO_TABLE."");
       while($row= $ids->fetch_object()) {
         $user = $this->conn->query("SELECT username FROM ".$this->USERS_TABLE." WHERE id='".$row->user_id."'")->fetch_object();
         $item = array("id"=>$row->user_id, "username"=>$user->username, "title"=>$row->title, "description"=>$row->title);
@@ -131,7 +131,7 @@ class DatabaseManager {
      */
     function getStreamByID($user_id)
     {
-      $query_string="SELECT title, description, category_id FROM ".$this->STREAMS_TABLE." WHERE user_id='".$user_id."' LIMIT 1";
+      $query_string="SELECT title, description, category_id FROM ".$this->STREAMS_VIDEO_TABLE." WHERE user_id='".$user_id."' LIMIT 1";
       $result=$this->conn->query($query_string)->fetch_array();
       if(sizeof($result)>=1)
         return $result;

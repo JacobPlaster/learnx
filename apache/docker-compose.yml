@@ -18,6 +18,7 @@ nodejs:
     - "3000:3000"
   links:
     - "redis"
+    - "db"
 db:
   image: learnx-mysql
   environment:
