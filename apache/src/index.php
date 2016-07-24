@@ -28,7 +28,8 @@
             $LiveUsers = $dm->getAllLiveStreams();
             foreach($LiveUsers as &$value)
             {
-              echo("<a href=\"http://localhost/watch.php?author=".$value['username']."\">".$value['username']."</a> - ".$value['title']);
+              echo("<a href=\"/watch.php?author=".$value['username']."\">".$value['username']."</a> - ".$value['title']);
+              echo("<br/>");
             }
 
             $dm->disconnect();

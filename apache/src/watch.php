@@ -1,4 +1,9 @@
-<?php require_once($_SERVER['DOCUMENT_ROOT'].'/cfg.php'); ?>
+<?php
+  require_once($_SERVER['DOCUMENT_ROOT'].'/cfg.php');
+  require_once($_SERVER['DOCUMENT_ROOT'].'/cfg.php');
+  include $SERVER_PATH['libs-php'].'/redis.php';
+  session_start();
+?>
 <?php
   require_once($SERVER_PATH['libs-php'].'/DatabaseManager.php');
   require_once($SERVER_PATH['libs-php'].'/error_functions.php');

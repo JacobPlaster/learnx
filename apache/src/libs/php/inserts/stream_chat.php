@@ -53,10 +53,12 @@
       // enter key pressed
       if(event.which === 13){
         var message = $("#stream_chat_input").val();
-        socket.emit("send message", {message:message});
-        addMessage("username", message);
-        // clear
-        $("#stream_chat_input").val("");
+        if(message.length > 0)
+        {
+          socket.emit("send message", {message:message});
+          // clear
+          $("#stream_chat_input").val("");
+        }
       }
     });
   });
