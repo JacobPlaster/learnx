@@ -23,3 +23,9 @@ Basic Docker Commands:
   - session does not destory in redis
   - Improve communication between RED5 and PHP
   - Create UI for stream generation
+
+
+## Next
+  - Add more to login system
+  - Create test page that populates database
+  - Create seperate pages for elemnts (instead of inserting chat)
