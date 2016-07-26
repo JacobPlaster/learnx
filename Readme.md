@@ -26,6 +26,7 @@ Basic Docker Commands:
 
 
 ## Next
-  - Add more to login system
+  - Add auth and encryption to login system
   - Create test page that populates database
+  - Add mysql to red5
   - Create seperate pages for elemnts (instead of inserting chat)

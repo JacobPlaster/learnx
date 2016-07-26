@@ -34,4 +34,5 @@
   $SERVER_PATH['inserts-footer-libs'] = $SERVER_PATH['inserts'].'/footer_libs.php';
   $SERVER_PATH['inserts-stream-video'] = $SERVER_PATH['inserts'].'/stream_video.php';
   $SERVER_PATH['inserts-stream-chat'] = $SERVER_PATH['inserts'].'/stream_chat.php';
+  $SERVER_PATH['inserts-loginreg-form'] = $SERVER_PATH['inserts'].'/loginreg_form.php';
  ?>

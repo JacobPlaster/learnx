@@ -3,6 +3,7 @@ class DatabaseManager {
     // Tables
     private $USERS_TABLE = "users";
     private $STREAMS_VIDEO_TABLE = "stream_video";
+    private $STREAMS_CHAT_TABLE = "stream_chat";
 
     private $conn = NULL;
 

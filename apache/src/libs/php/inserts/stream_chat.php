@@ -74,7 +74,7 @@
       {
         echo("Logged in as: <span class='highlight_1'>".$_SESSION['username']."</span>");
       } else {
-        echo("Please <a href='/login.php'>log in</a> or <a href='/login.php'>create account</a>.");
+        echo("Please <a href='/login.php' target='_blank'>log in</a> or <a href='/login.php?r=true' target='_blank'>create account</a>.");
       }
     ?>
   </div>
