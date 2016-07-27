@@ -35,15 +35,70 @@ class DatabaseManager {
      * @return   Null if stream doesnt exists and id of user if does
      *
      */
-    function StreamKeyExists($StreamKey)
+    function videoStreamKeyExists($key)
     {
-      $query_string="SELECT id FROM ".$this->USERS_TABLE." WHERE stream_key='".$StreamKey."' LIMIT 1";
+      $query_string="SELECT id FROM ".$this->USERS_TABLE." WHERE stream_key='".$key."' LIMIT 1";
       $result=$this->conn->query($query_string)->fetch_object()->id;
       if(sizeof($result)>=1)
         return $result;
       else
         return NULL;
     }
+
+    /**
+     *
+     * Disconnects the service from the mysqli connection
+     *
+     * @param    Secret stream key to identify user
+     * @return   Null if stream doesnt exists and id of user if does
+     *
+     */
+    function videoStreamTagExists($tag)
+    {
+      $query_string="SELECT user_id FROM ".$this->STREAMS_VIDEO_TABLE." WHERE tag='".$tag."' LIMIT 1";
+      $result=$this->conn->query($query_string)->fetch_object()->user_id;
+      if(sizeof($result)>=1)
+        return $result;
+      else
+        return NULL;
+    }
+
+    /**
+     *
+     * Disconnects the service from the mysqli connection
+     *
+     * @param    Secret stream key to identify user
+     * @return   Null if stream doesnt exists and id of user if does
+     *
+     */
+    function chatStreamTagExists($tag)
+    {
+      $query_string="SELECT user_id FROM ".$this->STREAMS_CHAT_TABLE." WHERE tag='".$tag."' LIMIT 1";
+      $result=$this->conn->query($query_string)->fetch_object()->user_id;
+      if(sizeof($result)>=1)
+        return $result;
+      else
+        return NULL;
+    }
+
+    /**
+     *
+     * Checks if the username already exists in the database
+     *
+     * @param    Users username
+     * @return   Null if does not exists else returns id
+     *
+     */
+    function usernameExists($username)
+    {
+      $query_string="SELECT id FROM ".$this->USERS_TABLE." WHERE username='".$username."' LIMIT 1";
+      $result=$this->conn->query($query_string)->fetch_object()->id;
+      if(sizeof($result)>=1)
+        return $result;
+      else
+        return NULL;
+    }
+
 
     /**
      *
@@ -73,13 +128,56 @@ class DatabaseManager {
      * @param The category that the stream realtes to
      *
      */
-    function addNewStream($user_id, $title, $description, $category_id)
+    function addNewVideoStream($user_id, $tag, $title, $description, $stream_key)
     {
       $title = $this->conn->real_escape_string($title);
       $description = $this->conn->real_escape_string($description);
       $query_string = "INSERT INTO ".$this->STREAMS_VIDEO_TABLE."
-      (user_id, title, description, category_id)
-      VALUES ('$user_id', '$title', '$description', '$category_id')";
+      (user_id, tag, title, description, stream_key)
+      VALUES ('$user_id', '$tag', '$title', '$description', '$stream_key')";
+      $result = $this->conn->query($query_string);
+      if(!$result){
+        echo($query_string);
+        die('Error : ('. $this->conn->errno .') '. $this->conn->error);
+      }
+    }
+
+    /**
+     *
+     * Adds a new item into the stream table which details the new incoming stream
+     *
+     * @param The id of the targeted user
+     * @param The title of the stream
+     * @param The description of the stream
+     * @param The category that the stream realtes to
+     *
+     */
+    function addNewChatStream($user_id, $tag)
+    {
+      $query_string = "INSERT INTO ".$this->STREAMS_CHAT_TABLE."
+      (user_id, tag)
+      VALUES ('$user_id', '$tag')";
+      $result = $this->conn->query($query_string);
+      if(!$result){
+        echo($query_string);
+        die('Error : ('. $this->conn->errno .') '. $this->conn->error);
+      }
+    }
+
+    /**
+     *
+     * Adds a new user to the database
+     *
+     * @param The username of the user
+     * @param The users password
+     * @param The users email
+     *
+     */
+    function addNewUser($username, $password, $email)
+    {
+      $query_string = "INSERT INTO ".$this->USERS_TABLE."
+      (username, password, email)
+      VALUES ('$username', '$password', '$email')";
       $result = $this->conn->query($query_string);
       if(!$result){
         die('Error : ('. $this->conn->errno .') '. $this->conn->error);
@@ -140,7 +238,23 @@ class DatabaseManager {
         return NULL;
     }
 
-
+    /**
+     *
+     * Returns all user id's
+     *
+     * @param users id
+     *
+     */
+    function getAllUserIDs()
+    {
+      $query_string="SELECT id FROM ".$this->USERS_TABLE." ";
+      $result=$this->conn->query($query_string);
+      $rows = array();
+      while($row = $result->fetch_assoc()){
+          $rows[] = $row;
+      }
+      return $rows;
+    }
 
     /**
      *
