@@ -24,7 +24,6 @@ db:
   environment:
     - "MYSQL_ROOT_PASSWORD=root"
     - "ON_CREATE_DB=learnx"
-    - "STARTUP_SQL=/tmp/dump.sql"
 redis:
   image: learnx-redis
   ports:

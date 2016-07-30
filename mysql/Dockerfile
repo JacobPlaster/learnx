@@ -3,9 +3,6 @@ FROM debian:jessie
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r mysql && useradd -r -g mysql mysql
 
-# Add initial database to tmp folder
-ADD base-db.sql /tmp/base-db.sql
-
 # add gosu for easy step-down from root
 ENV GOSU_VERSION 1.7
 RUN set -x \
