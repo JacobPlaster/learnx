@@ -3,7 +3,7 @@
 
     /* SOCKET IO */
    var socket = io.connect("http://<?php echo($SERVER_CFG['SOCKET_HOST'].':'.$SERVER_CFG['SOCKET_PORT']); ?>",
-    { query: '<?php echo("r_var=".$author) ?>' });
+    { query: '<?php echo("r_var=".$STREAM_TARGET_CHAT) ?>' });
    socket.on('new message',function(data) {
      addMessage(data.username, data.message);
    });

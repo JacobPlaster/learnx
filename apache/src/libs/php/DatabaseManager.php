@@ -1,4 +1,6 @@
 <?php
+require_once($_SERVER['DOCUMENT_ROOT'].'/cfg.php');
+
 class DatabaseManager {
     // Tables
     private $USERS_TABLE = "users";
@@ -211,10 +213,10 @@ class DatabaseManager {
     function getAllLiveStreams()
     {
       $results = array();
-      $ids = $this->conn->query("SELECT user_id, title, description FROM ".$this->STREAMS_VIDEO_TABLE."");
+      $ids = $this->conn->query("SELECT user_id, title, description, tag FROM ".$this->STREAMS_VIDEO_TABLE."");
       while($row= $ids->fetch_object()) {
         $user = $this->conn->query("SELECT username FROM ".$this->USERS_TABLE." WHERE id='".$row->user_id."'")->fetch_object();
-        $item = array("id"=>$row->user_id, "username"=>$user->username, "title"=>$row->title, "description"=>$row->title);
+        $item = array("id"=>$row->user_id, "username"=>$user->username, "title"=>$row->title, "description"=>$row->title, "tag"=>$row->tag);
         array_push($results, $item);
       }
       return $results;
@@ -230,13 +232,31 @@ class DatabaseManager {
      */
     function getStreamByID($user_id)
     {
-      $query_string="SELECT title, description, category_id FROM ".$this->STREAMS_VIDEO_TABLE." WHERE user_id='".$user_id."' LIMIT 1";
+      $query_string="SELECT title, description, tag FROM ".$this->STREAMS_VIDEO_TABLE." WHERE user_id='".$user_id."' LIMIT 1";
       $result=$this->conn->query($query_string)->fetch_array();
       if(sizeof($result)>=1)
         return $result;
       else
         return NULL;
     }
+
+    /**
+     *
+     * Returns stream associated with given user id
+     *
+     * @param users id
+     *
+     */
+    function getStreamByTag($tag)
+    {
+      $query_string="SELECT title, description, user_id FROM ".$this->STREAMS_VIDEO_TABLE." WHERE tag='".$tag."' LIMIT 1";
+      $result=$this->conn->query($query_string)->fetch_array();
+      if(sizeof($result)>=1)
+        return $result;
+      else
+        return NULL;
+    }
+
 
     /**
      *
@@ -284,6 +304,23 @@ class DatabaseManager {
     {
       $query_string="SELECT id FROM ".$this->USERS_TABLE." WHERE username='".$user_id."' LIMIT 1";
       $result=$this->conn->query($query_string)->fetch_object()->id;
+      if(sizeof($result)>=1)
+        return $result;
+      else
+        return NULL;
+    }
+
+    /**
+     *
+     * Gets the id of the user that owns the stream via the streams tag
+     *
+     * @param users username
+     *
+     */
+    function getVideoStreamOwner($user_id)
+    {
+      $query_string="SELECT id, username, email FROM ".$this->USERS_TABLE." WHERE id='".$user_id."' LIMIT 1";
+      $result=$this->conn->query($query_string)->fetch_object();
       if(sizeof($result)>=1)
         return $result;
       else
