@@ -35,4 +35,6 @@
   $SERVER_PATH['inserts-stream-video'] = $SERVER_PATH['inserts'].'/stream_video.php';
   $SERVER_PATH['inserts-stream-chat'] = $SERVER_PATH['inserts'].'/stream_chat.php';
   $SERVER_PATH['inserts-loginreg-form'] = $SERVER_PATH['inserts'].'/loginreg_form.php';
+  $SERVER_PATH['inserts-navbar-signedin'] = $SERVER_PATH['inserts'].'/navbar_signedin.php';
+  $SERVER_PATH['inserts-navbar-notsigned'] = $SERVER_PATH['inserts'].'/navbar.php';
  ?>
