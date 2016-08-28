@@ -28,3 +28,6 @@ Basic Docker Commands:
 ## Next
   - Add auth and encryption to login system
   - Add mysql to red5
+
+
+use https://education.github.com/pack/offers for free stuff (including ssl certificate, payment processing and email infrastructure)
