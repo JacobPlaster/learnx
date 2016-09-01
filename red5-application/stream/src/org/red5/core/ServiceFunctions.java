@@ -1,5 +1,7 @@
 package org.red5.core;
 
+import org.red5.server.api.stream.IBroadcastStream;
+
 public class ServiceFunctions {
 	
 	/**
@@ -29,5 +31,6 @@ public class ServiceFunctions {
 		}
 		return null;
 	}
+	
 
 }

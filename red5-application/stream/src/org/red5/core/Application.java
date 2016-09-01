@@ -11,6 +11,8 @@ package org.red5.core;
  */
 
 
+import java.util.UUID;
+
 import org.red5.logging.Red5LoggerFactory;
 import org.red5.server.adapter.MultiThreadedApplicationAdapter;
 import org.red5.server.api.IConnection;
@@ -42,6 +44,7 @@ public class Application extends MultiThreadedApplicationAdapter{
     	
     	log.info("[STREAM - APPLICATION] connect");
 		queryString = String.valueOf(conn.getConnectParams().get("queryString")); 
+		log.info(queryString);
 		
 		// maybe check if max amount of connected users reached
 
@@ -60,13 +63,37 @@ public class Application extends MultiThreadedApplicationAdapter{
     	if(conn_secret_key == null) this.rejectClient("No secret found.");
     	
     	mysqlHandler = new MysqlHandler();
+    	// load stream details
+    	mysqlHandler.getStreamDetails(streamTag);
     	// see if query secret matches secret in database
     	String databaseKey = mysqlHandler.getStreamKey(streamTag);
-    	if(! conn_secret_key.equals(databaseKey))
+    	if(!conn_secret_key.equals(databaseKey))
     	{
     		this.rejectClient("Incorrect authentication details.");
     	}
-    	// set state to online
+    	
+    	
+    	// if the stream supports recording 
+    	if(mysqlHandler.getRecordable())
+    	{
+	    	// begin recording stream
+	    	String streamFileName = mysqlHandler.getUserId() + mysqlHandler.getStreamId() + UUID.randomUUID().toString().replace("-", "");
+	    	// make sure string is 16 chars
+	    	streamFileName = streamFileName.substring(0, 16);
+	    	try
+	    	{
+	    		log.info("Starting to record "+stream.getPublishedName()+", saved as: " + streamFileName + ".flv");
+	    		mysqlHandler.addNewVideo(streamFileName);
+	    		stream.saveAs(streamFileName, false);
+	    	} catch (Exception e)
+	    	{
+	    		log.error("Error while saving stream: " + streamFileName);
+	    		e.printStackTrace();
+	    	}
+    	}
+  
+    	
+    	// set state to online.
     	mysqlHandler.setStreamState(streamTag, 1);
         super.streamPublishStart(stream);
     }

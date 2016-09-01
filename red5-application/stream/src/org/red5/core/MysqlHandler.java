@@ -11,6 +11,14 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 public class MysqlHandler {
 	
 	private String STREAMS_VIDEO_TABLE = "stream_video";
+	private String SAVED_VIDEO_TABLE = "saved_video";
+	
+	private int stream_id = 0;
+	private int user_id = 0;
+	private String streamKey = null;
+	private boolean isRecordable = false;
+	private int numOfConnections = 0;
+	private int maxConnections = 0;
 	
 	public static DataSource getMYSQLDataSource()
 	{
@@ -28,24 +36,33 @@ public class MysqlHandler {
 		return mysqld;
 	}
 	
-	// check if allowed to connect to stream tag
-	public String getStreamKey(String tag)
+	/***
+	 * Uses the tag to locate the details of the stream
+	 * @param tag
+	 */
+	public void getStreamDetails(String tag)
 	{
 		Connection conn = null;
 		Statement stmt = null;
 		DataSource dataSource = this.getMYSQLDataSource();
-		String streamKey = null;
 		try
 		{
 			conn = dataSource.getConnection();
 			// query
 			stmt = conn.createStatement();
-			String query = "SELECT stream_key FROM "+STREAMS_VIDEO_TABLE+" WHERE tag='"+tag+"' LIMIT 1";
+			String query = "SELECT stream_key, id, user_id, recordable, numOfConnections, maxConnections FROM "+STREAMS_VIDEO_TABLE+" WHERE tag='"+tag+"' LIMIT 1";
 			ResultSet rs = stmt.executeQuery(query);
 			// get results 
 			while(rs.next())
 			{
 				streamKey = rs.getString("stream_key");
+				stream_id = rs.getInt("id");
+				user_id = rs.getInt("user_id");
+				if(rs.getInt("recordable") == 1)
+					isRecordable = true;
+				numOfConnections = rs.getInt("numOfConnections");
+				maxConnections = rs.getInt("maxConnections");
+				
 			}
 			rs.close();
 			
@@ -63,9 +80,13 @@ public class MysqlHandler {
 				e.printStackTrace();
 			}
 		}
-		return streamKey;
 	}
 	
+	/***
+	 * Sets the state of the stream (example 1 = online, 0 = offline)
+	 * @param tag
+	 * @param state
+	 */
 	public void setStreamState(String tag, int state)
 	{
 		Connection conn = null;
@@ -93,5 +114,102 @@ public class MysqlHandler {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	/***
+	 * Adds the video the being recorded to the main database
+	 * @param filename
+	 */
+	public void addNewVideo(String filename)
+	{
+		Connection conn = null;
+		Statement stmt = null;
+		DataSource dataSource = this.getMYSQLDataSource();
+		try
+		{
+			conn = dataSource.getConnection();
+			stmt = conn.createStatement();
+			// change state to online (streaming)
+			String query = "INSERT INTO `"+SAVED_VIDEO_TABLE+"`(`stream_video_id`, `user_id`, `filename`) VALUES ('"+stream_id+"','"+user_id+"','"+filename+"')";
+			int rs = stmt.executeUpdate(query);
+			
+		} catch( Exception e )
+		{
+			e.printStackTrace();
+		} finally
+		{
+			try
+			{
+				if(conn != null)
+					conn.close();
+			} catch( Exception e )
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/***
+	 * returns the stream key
+	 * @param tag
+	 * @return
+	 */
+	public String getStreamKey(String tag)
+	{
+		return streamKey;
+	}
+	
+	/**
+	 * Returns false if the stream does not support recording
+	 * @return
+	 */
+	public boolean getRecordable()
+	{
+		return isRecordable;
+	}
+	
+	/***
+	 * Returns the id of the stream
+	 * @return
+	 */
+	public int getStreamId()
+	{
+		return this.stream_id;
+	}
+	
+	/***
+	 * Returns the id of the user
+	 * @return
+	 */
+	public int getUserId()
+	{
+		return this.user_id;
+	}
+	
+	/***
+	 * Returns the number of connections to the stream
+	 * @return
+	 */
+	public int getNumOfConnections()
+	{
+		return this.numOfConnections;
+	}
+	
+	/***
+	 * Returns the maximum number of connections to the stream
+	 * @return
+	 */
+	public int getMaxConnections()
+	{
+		return this.maxConnections;
 	}
 }
