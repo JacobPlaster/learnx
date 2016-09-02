@@ -36,7 +36,7 @@
             $conn = $dm->connect();
 
             // load all available streams
-            $LiveUsers = $dm->getAllLiveStreams();
+            $LiveUsers = $dm->getAllOnlineLiveVideoStreams();
             foreach($LiveUsers as &$value)
             {
               echo("<a href=\"/watch.php?tag=".$value['tag']."\">".$value['username']."</a> - ".$value['title']);

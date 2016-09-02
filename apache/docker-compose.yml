@@ -21,6 +21,8 @@ nodejs:
     - "db"
 db:
   image: learnx-mysql
+  ports:
+    - "3306:3306"
   environment:
     - "MYSQL_ROOT_PASSWORD=root"
     - "ON_CREATE_DB=learnx"

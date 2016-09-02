@@ -83,6 +83,44 @@ public class MysqlHandler {
 	}
 	
 	/***
+	 * Increments the number of connections, unless inc is set to false. In Which case, the value is decremented
+	 * @param tag
+	 * @param state
+	 */
+	public void incrementNumOfConnections(String tag, boolean inc)
+	{
+		Connection conn = null;
+		Statement stmt = null;
+		DataSource dataSource = this.getMYSQLDataSource();
+		try
+		{
+			conn = dataSource.getConnection();
+			stmt = conn.createStatement();
+			// change state to online (streaming)
+			String query;
+			if(inc)
+				query = "UPDATE "+STREAMS_VIDEO_TABLE+" SET numOfConnections=numOfConnections+1 WHERE tag='"+tag+"'";
+			else
+				query = "UPDATE "+STREAMS_VIDEO_TABLE+" SET numOfConnections=numOfConnections-1 WHERE tag='"+tag+"'";
+			int rs = stmt.executeUpdate(query);
+			
+		} catch( Exception e )
+		{
+			e.printStackTrace();
+		} finally
+		{
+			try
+			{
+				if(conn != null)
+					conn.close();
+			} catch( Exception e )
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/***
 	 * Sets the state of the stream (example 1 = online, 0 = offline)
 	 * @param tag
 	 * @param state
@@ -163,7 +201,7 @@ public class MysqlHandler {
 	 * @param tag
 	 * @return
 	 */
-	public String getStreamKey(String tag)
+	public String getStreamKey()
 	{
 		return streamKey;
 	}
