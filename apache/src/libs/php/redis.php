@@ -1,4 +1,5 @@
 <?php
+
 //First we load the Predis autoloader
 //echo dirname(__FILE__)."/predis-1.0/src/Autoloader.php";
 require($SERVER_PATH['libs-php']."/predis/src/Autoloader.php");
@@ -17,6 +18,7 @@ Predis\Autoloader::register();
  *
  * This class is used to store session data with redis, it store in json the session to be used more easily in Node.JS
  */
+ 
 class redisSessionHandler{
     private $host = "redis";
     private $port = 6379;

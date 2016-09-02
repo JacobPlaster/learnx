@@ -4,8 +4,8 @@
   $SERVER_CFG['HOST'] = "localhost";
   $SERVER_CFG['PORT'] = "80";
   // Databse
-  /*$SERVER_CFG['MYSQL_HOST'] = "localhost";*/ $SERVER_CFG['MYSQL_HOST'] = "db";
-  /*$SERVER_CFG['MYSQL_PORT'] = "8889";*/ $SERVER_CFG['MYSQL_PORT'] = "3306";
+  $SERVER_CFG['MYSQL_HOST'] = "localhost"; /*$SERVER_CFG['MYSQL_HOST'] = "db";*/
+  $SERVER_CFG['MYSQL_PORT'] = "3306";
   $SERVER_CFG['MYSQL_USER'] = "root";
   $SERVER_CFG['MYSQL_PWD'] = "root";
   $SERVER_CFG['MYSQL_DATABSE_NAME'] = "learnx";
@@ -13,8 +13,8 @@
   $SERVER_CFG['SOCKET_HOST'] = "localhost";
   $SERVER_CFG['SOCKET_PORT'] = "3000";
 
-  $MEDIA_SERVER["HOST"] = "localhost";
-  $MEDIA_SERVER["PORT"] = "5000";
+  $MEDIA_SERVER["HOST"] = "192.168.0.12";
+  $MEDIA_SERVER["PORT"] = "localhost";
 
   // ********* PATHS ********* //
   // Libs folder

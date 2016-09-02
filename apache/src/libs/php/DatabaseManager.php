@@ -207,13 +207,31 @@ class DatabaseManager {
 
     /**
      *
-     * Returns all currenlty live streams
+     * Returns all live streams
      *
      */
-    function getAllLiveStreams()
+    function getAllLiveVideoStreams()
     {
       $results = array();
       $ids = $this->conn->query("SELECT user_id, title, description, tag FROM ".$this->STREAMS_VIDEO_TABLE."");
+      while($row= $ids->fetch_object()) {
+        $user = $this->conn->query("SELECT username FROM ".$this->USERS_TABLE." WHERE id='".$row->user_id."'")->fetch_object();
+        $item = array("id"=>$row->user_id, "username"=>$user->username, "title"=>$row->title, "description"=>$row->title, "tag"=>$row->tag);
+        array_push($results, $item);
+      }
+      return $results;
+    }
+
+
+    /**
+     *
+     * Returns all online live streams
+     *
+     */
+    function getAllOnlineLiveVideoStreams()
+    {
+      $results = array();
+      $ids = $this->conn->query("SELECT user_id, title, description, tag FROM ".$this->STREAMS_VIDEO_TABLE." WHERE state='1'");
       while($row= $ids->fetch_object()) {
         $user = $this->conn->query("SELECT username FROM ".$this->USERS_TABLE." WHERE id='".$row->user_id."'")->fetch_object();
         $item = array("id"=>$row->user_id, "username"=>$user->username, "title"=>$row->title, "description"=>$row->title, "tag"=>$row->tag);
