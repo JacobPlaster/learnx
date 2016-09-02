@@ -1,61 +1,37 @@
-# Red5 Media Server
+pmoust/red5
+===========
 
-Docker + Red5 items
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/pmoust/docker-red5?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-What is [Docker](https://www.docker.com/)?
+Red5 is an Open Source Flash Server written in Java that supports:
 
-### Docker Base Images
+ * Streaming Video (FLV, F4V, MP4, 3GP)
+ * Streaming Audio (MP3, F4A, M4A, AAC)
+ * Recording Client Streams (FLV and AVC+AAC in FLV container)
+ * Shared Objects
+ * Live Stream Publishing
+ * Remoting
+ * Protocols: RTMP, RTMPT, RTMPS, and RTMPE
+ * WebSocket (ws and wss)
+ * HLS
+ * RTSP (From Axis-type cameras)
 
-* [ubuntu](https://registry.hub.docker.com/_/ubuntu/)
-* [java](https://registry.hub.docker.com/_/java/)
+Available Red5 releases/tags:
 
-### Docker Tags
+* pmoust/red5:1.0.2
+* pmoust/red5:1.0.3
+* pmoust/red5:1.0.4 (also :latest)
 
-We provides multiple tagged images:
-
-* `latest` (default): Red5 1.0.6 Release + OpenJDK Java 7 JDK (alias to `red5-106`)
-* `base`: Red5 1.0.6 Release extendable base image
-* `base-jdk8`: Same version as above with OpenJDK 8
-* `red5-106-jdk8`: Red5 1.0.6 Release + OpenJDK 8
-* `red5-107-jdk8`: Red5 1.0.7 Snapshot + OpenJDK 8
-
-Older
-
-* `openjdk7-red5-104R`: Red5 1.0.4 Release + OpenJDK Java 7 JDK
-* `openjdk7-red5-105S`: Red5 1.0.5 Snapshot + OpenJDK Java 7 JDK
-* `oraclejdk7-red5-104R`: Red5 1.0.4 Release + Oracle Java 7 JDK
-* `oraclejdk7-red5-105S`: Red5 1.0.5 Snapshot + Oracle Java 7 JDK
-
-
-For example, you can run a `Red5` container with the following command:
-
-    docker run -it --rm mondain/red5
-
-
-### Installation
-
-1. Install [Docker](https://www.docker.com/).
-
-2. Download [automated build](https://registry.hub.docker.com/u/mondain/red5/) from public [Docker Hub Registry](https://registry.hub.docker.com/): `docker pull mondain/red5`
-
-   (alternatively, you can build an image from Dockerfile: `docker build -t="mondain/red5" github.com/Red5/docker`)
-
-
-### Usage
-
- 1. Starts red5 and exposes default ports for http and rtmp/e
-```sh
-    docker run -it -p 5080:5080 -p 1935:1935 --rm mondain/red5
+To run:
+```
+docker run --name red5 --rm -d -p 5080:5080 -p 1935:1935 pmoust/red5
 ```
 
- 1. Starts red5 and exposes default ports for http, rtmp/e, and websocket
-```sh
-    docker run -it -p 5080:5080 -p 1935:1935 -p 8081:8081 --rm mondain/red5
+To reach the Red5 manager UI visit `http://${DOCKER_HOST}:5080`
+
+To build: 
 ```
-    
-### Additional Information
+make ${RED5_RELEASE}
+```
 
- * [Container linking](https://docs.docker.com/userguide/dockerlinks/)
- * [Managing data](https://docs.docker.com/userguide/dockervolumes/)
- 
-
+If no version is passed in `make`, the current :latest is built.

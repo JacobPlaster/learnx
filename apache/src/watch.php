@@ -66,6 +66,22 @@
             </div>
            </div> <!-- Closing row -->
 
+           <!--
+           <div id="stream_embed"></div>
+           <script>
+              (function() {
+                  var d = document, s = d.createElement('script');
+                  s.src = 'http://localhost:8000/libs/js/embed.js';  // IMPORTANT: Replace EXAMPLE with your forum shortname!
+
+                  s.setAttribute('STREAM_TARGET_VIDEO', '<?php// echo($tag); ?>');
+                  s.setAttribute('STREAM_TARGET_CHAT', '<?php //echo($tag); ?>');
+                  (d.head || d.body).appendChild(s);
+              })();
+          </script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">streams powered by GoLive.</a></noscript>
+        -->
+
+
          </div> <!-- Closing container -->
     </body>
 </html>

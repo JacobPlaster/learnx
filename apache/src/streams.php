@@ -24,8 +24,8 @@
             include($SERVER_PATH['inserts-navbar-notsigned']);
         ?>
 
+
         <div class="container">
-          <!-- Add your site or application content here -->
           <h1>Streams!</h1>
 
           <?php
@@ -47,6 +47,7 @@
 
            ?>
          </div>
+
 
     <?php include($SERVER_PATH['inserts-footer-libs']); ?>
     <?php include($SERVER_PATH['inserts-google-analytics']); ?>

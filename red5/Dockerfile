@@ -1,10 +1,10 @@
 #
-# Red5 + Java 7 Dockerfile
+# Red5 + Java 8 Dockerfile
 #
 # https://github.com/Red5/docker
 # https://hub.docker.com/_/java/
 #
-FROM java:7
+FROM java:8
 MAINTAINER Paul Gregoire <mondain@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
