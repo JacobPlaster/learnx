@@ -42,7 +42,7 @@ public class Application extends MultiThreadedApplicationAdapter{
 	IScope main_scope;
 	
 	
-
+	// Fired when ANY connection connects (rtmp and client player)
 	/** {@inheritDoc} */
     @Override
 	public synchronized boolean connect(IConnection conn, IScope scope, Object[] params) {
@@ -59,7 +59,7 @@ public class Application extends MultiThreadedApplicationAdapter{
 	}
     
     
-    
+    // fired when the user plays the stream via a player
     /** {@inheritDoc} */
     @Override
     public void streamPlayItemPlay(ISubscriberStream stream, IPlayItem item, boolean isLive) {
@@ -85,6 +85,7 @@ public class Application extends MultiThreadedApplicationAdapter{
     
     
     
+    // fired when the user connects an rtmp signal
     /** {@inheritDoc} */
     @Override
     public void streamBroadcastStart(IBroadcastStream stream) {
@@ -131,6 +132,7 @@ public class Application extends MultiThreadedApplicationAdapter{
     
     
     
+    // fired when the connected rtmp signal disconnects
     /** {@inheritDoc} */
     @Override
     public void streamBroadcastClose(IBroadcastStream stream)  {
@@ -141,6 +143,7 @@ public class Application extends MultiThreadedApplicationAdapter{
     
     
     
+    // fired when ANY connection disconnects (both client and rtmp)
 	/** {@inheritDoc} */
     @Override
 	public void disconnect(IConnection conn, IScope scope) {
