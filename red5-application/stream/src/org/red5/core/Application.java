@@ -16,7 +16,6 @@ import java.util.UUID;
 import org.red5.logging.Red5LoggerFactory;
 import org.red5.server.adapter.MultiThreadedApplicationAdapter;
 import org.red5.server.api.IConnection;
-import org.red5.server.api.Red5;
 import org.red5.server.api.scope.IScope;
 import org.red5.server.api.stream.IBroadcastStream;
 import org.red5.server.api.stream.IPlayItem;
@@ -34,6 +33,7 @@ public class Application extends MultiThreadedApplicationAdapter{
 	private static Logger log = Red5LoggerFactory.getLogger(Application.class);
 	RemoteServerHandler rHandler;
 	String conn_secret_key;
+	String conn_password;
 	String queryString;
 	MysqlHandler mysqlHandler;
 	
@@ -52,6 +52,11 @@ public class Application extends MultiThreadedApplicationAdapter{
     	this.main_scope = scope;
     	log.info("[STREAM - APPLICATION] connect");
 		queryString = String.valueOf(conn.getConnectParams().get("queryString")); 
+		// parse secret from query string
+		QueryStringParser qp = new QueryStringParser(queryString);
+    	conn_secret_key = qp.getSecret();
+    	conn_password = qp.getPassword();
+    	log.info("Main conn params: " + queryString);
 		
 		// maybe check if max amount of connected users reached
 
@@ -73,6 +78,25 @@ public class Application extends MultiThreadedApplicationAdapter{
     	mysqlHandler.incrementNumOfConnections(streamTag, true);
     	// load stream details
     	mysqlHandler.getStreamDetails(streamTag);
+    	
+
+    	// check if passworded stream
+    	String stream_password = mysqlHandler.getPassword();
+    	// if stream has a password
+    	if(stream_password != null)
+    	{
+    		// if password does not match with the password given in the query string
+    		if(!stream_password.equals(conn_password))
+    		{
+    			// too many clients connected, reject
+        		//this.rejectClient(); for some reason, reject isnt enough for a viewer client
+        		this.disconnect(this.main_conn, this.main_scope);
+        		this.main_conn.close();
+    		}
+    	}
+    	
+    	
+    	// Check if stream exceeds max allowed connections
     	int numOfCons = mysqlHandler.getNumOfConnections();
     	if(numOfCons > mysqlHandler.getMaxConnections())
     	{
@@ -92,12 +116,11 @@ public class Application extends MultiThreadedApplicationAdapter{
     	log.info("[STREAM - APPLICATION] streamBroadcastStart");
     	
     	streamTag = stream.getPublishedName();
-    	// parse secret from query string
-    	conn_secret_key = ServiceFunctions.parseQueryForSecret(queryString);
     	// no secret in query
     	if(conn_secret_key == null) this.rejectClient("No secret found.");
     	
     	mysqlHandler = new MysqlHandler();
+    	mysqlHandler.incrementNumOfConnections(streamTag, true);
     	// load stream details
     	mysqlHandler.getStreamDetails(streamTag);
     	// see if query secret matches secret in database
@@ -127,7 +150,6 @@ public class Application extends MultiThreadedApplicationAdapter{
     	}
     	// set state to online.
     	mysqlHandler.setStreamState(streamTag, 1);
-    	mysqlHandler.incrementNumOfConnections(streamTag, true);
     }
     
     

@@ -54,6 +54,7 @@
           <?php
             $STREAM_TARGET_VIDEO = $tag;
             $STREAM_TARGET_CHAT = $tag;
+            $STREAM_PWD = $_GET['pwd'];
           ?>
           <?php include($SERVER_PATH['inserts-footer-libs']); ?>
           <?php include($SERVER_PATH['inserts-google-analytics']); ?>

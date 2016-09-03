@@ -16,6 +16,7 @@ public class MysqlHandler {
 	private int stream_id = 0;
 	private int user_id = 0;
 	private String streamKey = null;
+	private String password = null;
 	private boolean isRecordable = false;
 	private int numOfConnections = 0;
 	private int maxConnections = 0;
@@ -50,18 +51,22 @@ public class MysqlHandler {
 			conn = dataSource.getConnection();
 			// query
 			stmt = conn.createStatement();
-			String query = "SELECT stream_key, id, user_id, recordable, numOfConnections, maxConnections FROM "+STREAMS_VIDEO_TABLE+" WHERE tag='"+tag+"' LIMIT 1";
+			String query = "SELECT stream_key, id, user_id, password, recordable, numOfConnections, maxConnections FROM "+STREAMS_VIDEO_TABLE+" WHERE tag='"+tag+"' LIMIT 1";
 			ResultSet rs = stmt.executeQuery(query);
 			// get results 
 			while(rs.next())
 			{
-				streamKey = rs.getString("stream_key");
-				stream_id = rs.getInt("id");
-				user_id = rs.getInt("user_id");
+				this.streamKey = rs.getString("stream_key");
+				this.stream_id = rs.getInt("id");
+				this.user_id = rs.getInt("user_id");
 				if(rs.getInt("recordable") == 1)
-					isRecordable = true;
-				numOfConnections = rs.getInt("numOfConnections");
-				maxConnections = rs.getInt("maxConnections");
+					this.isRecordable = true;
+				this.numOfConnections = rs.getInt("numOfConnections");
+				this.maxConnections = rs.getInt("maxConnections");
+				
+				String tmpPassword = rs.getString("password");
+				if(tmpPassword != "" && tmpPassword != null && tmpPassword.length() > 2)
+					this.password = tmpPassword;
 				
 			}
 			rs.close();
@@ -222,6 +227,15 @@ public class MysqlHandler {
 	public int getStreamId()
 	{
 		return this.stream_id;
+	}
+	
+	/***
+	 * returns the password of the stream (Null if not set)
+	 * @return
+	 */
+	public String getPassword()
+	{
+		return this.password;
 	}
 	
 	/***
