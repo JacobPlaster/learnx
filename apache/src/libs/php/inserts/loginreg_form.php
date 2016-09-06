@@ -31,7 +31,7 @@
 
 
   <div id="signUpModalBody" class="modal-body hidden">
-    <form role="form" method="POST" action="/login.php">
+    <form role="form" method="POST" action="/login.php?r=true">
       <div class="form-group">
         <label for="username">Usename:</label>
         <input type="text" class="form-control" name="username">

@@ -104,6 +104,25 @@ class DatabaseManager {
 
     /**
      *
+     * Checks if the username already exists in the database
+     *
+     * @param    Users username
+     * @return   Null if does not exists else returns id
+     *
+     */
+    function emailExists($email)
+    {
+      $query_string="SELECT id FROM ".$this->USERS_TABLE." WHERE email='".$email."' LIMIT 1";
+      $result=$this->conn->query($query_string)->fetch_object()->id;
+      if(sizeof($result)>=1)
+        return $result;
+      else
+        return NULL;
+    }
+
+
+    /**
+     *
      * Sets the state of the users stream
      *
      * @param The id of the targeted user
@@ -177,9 +196,12 @@ class DatabaseManager {
      */
     function addNewUser($username, $password, $email)
     {
+      //generate salt
+      $salt = $this->generateSalt();
+      $password = sha1($password.$salt);
       $query_string = "INSERT INTO ".$this->USERS_TABLE."
-      (username, password, email)
-      VALUES ('$username', '$password', '$email')";
+      (username, password, salt, email)
+      VALUES ('$username', '$password', '$salt', '$email')";
       $result = $this->conn->query($query_string);
       if(!$result){
         die('Error : ('. $this->conn->errno .') '. $this->conn->error);
@@ -318,10 +340,28 @@ class DatabaseManager {
      * @param users username
      *
      */
-    function getUserIDByUsername($user_id)
+    function getUserIDByUsername($username)
     {
-      $query_string="SELECT id FROM ".$this->USERS_TABLE." WHERE username='".$user_id."' LIMIT 1";
+      $query_string="SELECT id FROM ".$this->USERS_TABLE." WHERE username='".$username."' LIMIT 1";
       $result=$this->conn->query($query_string)->fetch_object()->id;
+      if(sizeof($result)>=1)
+        return $result;
+      else
+        return NULL;
+    }
+
+
+    /**
+     *
+     * Gets the user data by its username
+     *
+     * @param users username
+     *
+     */
+    function getUserByUsername($username)
+    {
+      $query_string="SELECT * FROM ".$this->USERS_TABLE." WHERE username='".$username."' LIMIT 1";
+      $result=$this->conn->query($query_string)->fetch_object();
       if(sizeof($result)>=1)
         return $result;
       else
@@ -353,6 +393,22 @@ class DatabaseManager {
     function disconnect()
     {
       $this->conn->close();
+    }
+
+
+    /**
+    * Generates a random salt
+    */
+    function generateSalt(){
+        $result = "";
+        $len = 12;
+        $chars = "abcdefghijklmnopqrstuvwxyz$_?!-0123456789";
+        $charArray = str_split($chars);
+        for($i = 0; $i < $len; $i++){
+    	    $randItem = array_rand($charArray);
+    	    $result .= "".$charArray[$randItem];
+        }
+        return $result;
     }
 }
 ?>

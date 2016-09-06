@@ -2,15 +2,66 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/cfg.php');
 include $SERVER_PATH['libs-php'].'/redis.php';
+require_once($SERVER_PATH['libs-php'].'/DatabaseManager.php');
 
 session_start();
 
+// Update database and connect
+$dm = new DatabaseManager;
+$conn = $dm->connect();
+
+$errors = array();
+
 if (isset($_POST['submit-login'])) {
-    $_SESSION['username'] = $_POST['username'];
+    $username = mysql_real_escape_string($_POST['username']);
+    $password = mysql_real_escape_string($_POST['password']);
+    $user = $dm->getUserByUsername($username);
+
+    if($user != NULL)
+    {
+      $encrypt_pass = sha1($password.$user->salt);
+      if($encrypt_pass == $user->password)
+      {
+        // sucess
+        $_SESSION['username'] = $user->username;
+        $_SESSION['email'] = $user->email;
+        header('Location: /user/index.php');
+      } else {
+        array_push($errors, "Username or password incorrect.");
+      }
+    } else {
+      array_push($errors, "Username or password incorrect.");
+    }
+    // get salt and password
+    // if match when encrypted then go
 }
 elseif (isset($_POST['submit-register']))
 {
-  $_SESSION['username'] = $_POST['username'];
+  $pass1 = $_POST['password1'];
+  $pass2 = $_POST['password2'];
+
+  if($pass1 == $pass2)
+  {
+    $username = mysql_real_escape_string($_POST['username']);
+    $email = mysql_real_escape_string($_POST['email']);
+    $pass1 = mysql_real_escape_string($pass1);
+
+    // check if username taken
+    if($dm->usernameExists($username) == NULL)
+    {
+      // check if email in use
+      if($dm->emailExists($email) == NULL)
+      {
+        $dm->addNewUser($username, $pass1, $email);
+      } else {
+        array_push($errors, "Email address is already in use.");
+      }
+    } else {
+      array_push($errors, "Username is already in use.");
+    }
+  } else {
+    array_push($errors, "Password does not matched re-typed password.");
+  }
 }
 ?>
 
@@ -29,6 +80,10 @@ elseif (isset($_POST['submit-register']))
       // user not logged in
       if(!isset($_SESSION['username']))
       {
+        foreach($errors as &$error)
+        {
+          echo("<h5>".$error."</h5>");
+        }
         include($SERVER_PATH['inserts-loginreg-form']);
       // user logged in
       } else {
