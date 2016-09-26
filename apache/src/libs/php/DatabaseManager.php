@@ -396,6 +396,28 @@ class DatabaseManager {
     }
 
 
+    function purchaseStream($package, $user_id, $tag, $stream_key)
+    {
+      switch($package)
+      {
+        // cheapest package
+        case 0:
+          $dm->addNewVideoStream($user_id, $tag, "Untitled", "No description", $stream_key);
+          $dm->addNewChatStream($user_id, $tag);
+        break;
+        // HD package
+        case 1:
+        break;
+        // video recording and unlimited connections
+        case 2:
+        break;
+        // Password, better chat
+        case 3:
+        break;
+      }
+    }
+
+
     /**
     * Generates a random salt
     */
