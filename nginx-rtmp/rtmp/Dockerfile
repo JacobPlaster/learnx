@@ -36,4 +36,4 @@ RUN cd /src/nginx-1.6.2 && make && make install
 ADD nginx.conf /config/nginx.conf
 ADD static /static
 
-CMD "nginx"
+CMD nginx

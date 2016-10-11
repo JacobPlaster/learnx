@@ -6,6 +6,7 @@ class DatabaseManager {
     private $USERS_TABLE = "users";
     private $STREAMS_VIDEO_TABLE = "stream_video";
     private $STREAMS_CHAT_TABLE = "stream_chat";
+    private $PRODUCTS_TABLE = "products";
 
     private $conn = NULL;
 
@@ -244,6 +245,54 @@ class DatabaseManager {
       return $results;
     }
 
+    /**
+     *
+     * Returns all products that are in the database
+     *
+     */
+    function getAllProducts()
+    {
+      $results = array();
+      $query = $this->conn->query("SELECT * FROM ".$this->PRODUCTS_TABLE."");
+      while($row=$query->fetch_object())
+      {
+        array_push($results, $row);
+      }
+      return $results;
+    }
+
+
+    /**
+     *
+     * Returns product by ID
+     *
+     */
+    function getProductByID($id)
+    {
+      $query_string="SELECT * FROM ".$this->PRODUCTS_TABLE." WHERE id='".$id."' LIMIT 1";
+      $result=$this->conn->query($query_string)->fetch_array();
+      if(sizeof($result)>=1)
+        return $result;
+      else
+        return NULL;
+    }
+
+
+    /**
+     *
+     * Returns product by title
+     *
+     */
+    function getProductByTitle($title)
+    {
+      $query_string="SELECT * FROM ".$this->PRODUCTS_TABLE." WHERE title='".$title."' LIMIT 1";
+      $result=$this->conn->query($query_string)->fetch_array();
+      if(sizeof($result)>=1)
+        return $result;
+      else
+        return NULL;
+    }
+
 
     /**
      *
@@ -256,8 +305,26 @@ class DatabaseManager {
       $ids = $this->conn->query("SELECT user_id, title, description, tag FROM ".$this->STREAMS_VIDEO_TABLE." WHERE state='1'");
       while($row= $ids->fetch_object()) {
         $user = $this->conn->query("SELECT username FROM ".$this->USERS_TABLE." WHERE id='".$row->user_id."'")->fetch_object();
-        $item = array("id"=>$row->user_id, "username"=>$user->username, "title"=>$row->title, "description"=>$row->title, "tag"=>$row->tag);
-        array_push($results, $item);
+        $row->username = $user->username;
+        array_push($results, $row);
+      }
+      return $results;
+    }
+
+
+    /**
+     *
+     * Returns all streams associated with given user id
+     *
+     * @param users id
+     *
+     */
+    function getAllVidoeStreamsByID($user_id)
+    {
+      $results = array();
+      $query_string=$this->conn->query("SELECT * FROM ".$this->STREAMS_VIDEO_TABLE." WHERE user_id='".$user_id."'");
+      while($row= $query_string->fetch_object()) {
+        array_push($results, $row);
       }
       return $results;
     }
@@ -270,24 +337,7 @@ class DatabaseManager {
      * @param users id
      *
      */
-    function getStreamByID($user_id)
-    {
-      $query_string="SELECT title, description, tag FROM ".$this->STREAMS_VIDEO_TABLE." WHERE user_id='".$user_id."' LIMIT 1";
-      $result=$this->conn->query($query_string)->fetch_array();
-      if(sizeof($result)>=1)
-        return $result;
-      else
-        return NULL;
-    }
-
-    /**
-     *
-     * Returns stream associated with given user id
-     *
-     * @param users id
-     *
-     */
-    function getStreamByTag($tag)
+    function getVideoStreamByTag($tag)
     {
       $query_string="SELECT title, description, user_id FROM ".$this->STREAMS_VIDEO_TABLE." WHERE tag='".$tag."' LIMIT 1";
       $result=$this->conn->query($query_string)->fetch_array();
@@ -393,28 +443,6 @@ class DatabaseManager {
     function disconnect()
     {
       $this->conn->close();
-    }
-
-
-    function purchaseStream($package, $user_id, $tag, $stream_key)
-    {
-      switch($package)
-      {
-        // cheapest package
-        case 0:
-          $dm->addNewVideoStream($user_id, $tag, "Untitled", "No description", $stream_key);
-          $dm->addNewChatStream($user_id, $tag);
-        break;
-        // HD package
-        case 1:
-        break;
-        // video recording and unlimited connections
-        case 2:
-        break;
-        // Password, better chat
-        case 3:
-        break;
-      }
     }
 
 

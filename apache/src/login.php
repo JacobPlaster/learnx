@@ -1,7 +1,8 @@
 <?php
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/cfg.php');
-include $SERVER_PATH['libs-php'].'/redis.php';
+if($SERVER_CFG['REDIS_ENABLED'] == true)
+  include $SERVER_PATH['libs-php'].'/redis.php';
 require_once($SERVER_PATH['libs-php'].'/DatabaseManager.php');
 
 session_start();
@@ -25,7 +26,7 @@ if (isset($_POST['submit-login'])) {
         // sucess
         $_SESSION['username'] = $user->username;
         $_SESSION['email'] = $user->email;
-        header('Location: /user/index.php');
+        header('Location: /user/dashboard.php');
       } else {
         array_push($errors, "Username or password incorrect.");
       }
@@ -39,28 +40,34 @@ elseif (isset($_POST['submit-register']))
 {
   $pass1 = $_POST['password1'];
   $pass2 = $_POST['password2'];
+  // no errors, process registration
+  $username = mysql_real_escape_string($_POST['username']);
+  $email = mysql_real_escape_string($_POST['email']);
+  $pass1 = mysql_real_escape_string($pass1);
+  $pass2 = mysql_real_escape_string($pass2);
 
-  if($pass1 == $pass2)
+  // check if passwords match
+  if($pass1 != $pass2)
   {
-    $username = mysql_real_escape_string($_POST['username']);
-    $email = mysql_real_escape_string($_POST['email']);
-    $pass1 = mysql_real_escape_string($pass1);
+    array_push($errors, "Password does not match re-typed password.");
+  }
+  // check if username taken
+  if($dm->usernameExists($username) != NULL)
+  {
+    array_push($errors, "Username is already in use.");
+  }
+  // check if email in use
+  if($dm->emailExists($email) != NULL)
+  {
+    array_push($errors, "Email address is already in use.");
+  }
 
-    // check if username taken
-    if($dm->usernameExists($username) == NULL)
-    {
-      // check if email in use
-      if($dm->emailExists($email) == NULL)
-      {
-        $dm->addNewUser($username, $pass1, $email);
-      } else {
-        array_push($errors, "Email address is already in use.");
-      }
-    } else {
-      array_push($errors, "Username is already in use.");
-    }
-  } else {
-    array_push($errors, "Password does not matched re-typed password.");
+
+  // success
+  if(sizeof($errors) == 0)
+  {
+    $dm->addNewUser($username, $pass1, $email);
+      header('Location: /user/dashboard.php');
   }
 }
 ?>

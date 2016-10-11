@@ -1,0 +1,16 @@
+nginx-php:
+  build: ./php-fpm
+  ports:
+    - "8080:80"
+    - "443:443"
+  environment:
+      - HOST="localhost"
+
+
+nginx-rtmp:
+  build: ./rtmp
+  ports:
+    - "8000:80"
+    - "1935:1935"
+  links:
+    - "nginx-php"

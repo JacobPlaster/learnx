@@ -1,6 +1,7 @@
 <?php
   require_once($_SERVER['DOCUMENT_ROOT'].'/cfg.php');
-  include $SERVER_PATH['libs-php'].'/redis.php';
+  if($SERVER_CFG['REDIS_ENABLED'] == true)
+    include $SERVER_PATH['libs-php'].'/redis.php';
   session_start();
 ?>
 <?php
@@ -12,7 +13,7 @@
   $conn = $dm->connect();
 
   $tag = $_GET['tag'];
-  $stream = $dm->getStreamByTag($tag);
+  $stream = $dm->getVideoStreamByTag($tag);
   if($stream == NULL) call404Error("Stream does not exist.");
   $author = $dm->getVideoStreamOwner($stream['user_id']);
   if($author == NULL) call404Error("Stream does not exist.");
@@ -22,13 +23,10 @@
 
 
 <!doctype html>
-<html class="no-js" lang="">
+<html>
   <head>
-      <meta charset="utf-8">
-      <meta http-equiv="x-ua-compatible" content="ie=edge">
-      <title><?php /// echo($author['username']); ?> - live</title>
+      <title><?php  echo($stream['title']); ?> - live</title>
       <meta name="description" content="">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
       <?php include($SERVER_PATH['inserts-header-libs']); ?>
   </head>
     <body>
@@ -82,7 +80,7 @@
           <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">streams powered by GoLive.</a></noscript>
         -->
 
-
+          <?php include($SERVER_PATH['inserts-footer']); ?>
          </div> <!-- Closing container -->
     </body>
 </html>

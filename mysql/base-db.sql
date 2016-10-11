@@ -27,10 +27,6 @@ CREATE TABLE `saved_video` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 8fc3d5536310a2b4507268dc8c679b12c0dec5c5
 -- --------------------------------------------------------
 
 --
@@ -44,8 +40,6 @@ CREATE TABLE `stream_chat` (
   `state` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 
-<<<<<<< HEAD
-=======
 --
 -- Dumping data for table `stream_chat`
 --
@@ -69,7 +63,6 @@ INSERT INTO `stream_chat` (`id`, `user_id`, `tag`, `state`) VALUES
 (27, 20, 'sadddsxxv', 1),
 (28, 25, '3sfd454s', 1),
 (29, 26, '566ggdd5', 1);
->>>>>>> 8fc3d5536310a2b4507268dc8c679b12c0dec5c5
 
 -- --------------------------------------------------------
 
@@ -89,9 +82,6 @@ CREATE TABLE `stream_video` (
   `recordable` int(11) NOT NULL DEFAULT '0',
   `stream_key` varchar(64) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
-
-<<<<<<< HEAD
-=======
 --
 -- Dumping data for table `stream_video`
 --
@@ -115,8 +105,6 @@ INSERT INTO `stream_video` (`id`, `user_id`, `title`, `tag`, `description`, `num
 (27, 20, 'Cooking time - roast dinner', 'sadddsxxv', 'It has survived not only five centuries, but also the leap into electronic typesetting.', 0, 1000, 0, 0, 'wbpb4!puj7'),
 (28, 25, 'Live with PC mag', '3sfd454s', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s', 0, 1000, 0, 0, 'g248hq50fz'),
 (29, 26, 'Building a custom pc', '566ggdd5', 'Using new stream to reach out to my fans!!!! Hellooo.', 0, 1000, 0, 0, 'g3qv8dfjb!');
-
->>>>>>> 8fc3d5536310a2b4507268dc8c679b12c0dec5c5
 -- --------------------------------------------------------
 
 --
@@ -159,13 +147,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for table `stream_chat`
 --
-<<<<<<< HEAD
 ALTER TABLE `stream_chat` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `stream_video`
 --
 ALTER TABLE `stream_video` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
-=======
+
 ALTER TABLE `stream_chat`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=30;
 --
@@ -173,7 +160,6 @@ ALTER TABLE `stream_chat`
 --
 ALTER TABLE `stream_video`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=30;
->>>>>>> 8fc3d5536310a2b4507268dc8c679b12c0dec5c5
 --
 -- AUTO_INCREMENT for table `users`
 --

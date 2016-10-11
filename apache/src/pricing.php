@@ -7,7 +7,7 @@
 <!doctype html>
 <html>
     <head>
-      <title></title>
+      <title>Pricing</title>
       <meta name="description" content="">
       <?php include($SERVER_PATH['inserts-header-libs']); ?>
     </head>
@@ -24,9 +24,9 @@
 
 
         <div class="container">
-          <h1>Currenly live:</h1>
 
           <?php
+
             require_once($SERVER_PATH['libs-php'].'/DatabaseManager.php');
 
             // Update database and connect
@@ -34,17 +34,18 @@
             $conn = $dm->connect();
 
             // load all available streams
-            $LiveUsers = $dm->getAllOnlineLiveVideoStreams();
-            foreach($LiveUsers as &$value)
+            $products = $dm->getAllProducts();
+            foreach($products as &$p)
             {
-              echo("<a href=\"/watch.php?tag=".$value->tag."\">".$value->username."</a> - ".$value->title);
+              echo("<a href=\"/checkout/payment.php?package=".strtolower($p->title)."\">".$p->title."</a> - ".$p->price_gbp);
               echo("<br/>");
             }
 
             $dm->disconnect();
 
            ?>
-         </div>
+
+        </div>
 
     <?php include($SERVER_PATH['inserts-footer']); ?>
     <?php include($SERVER_PATH['inserts-footer-libs']); ?>
