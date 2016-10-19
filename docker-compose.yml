@@ -1,5 +1,5 @@
-apache:
-  image: learnx-php
+userfacing:
+  build: ./nginx-userfacing
   ports:
     - "8000:80"
     - "443:443"
