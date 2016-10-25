@@ -14,8 +14,8 @@ $conn = $dm->connect();
 $errors = array();
 
 if (isset($_POST['submit-login'])) {
-    $username = mysql_real_escape_string($_POST['username']);
-    $password = mysql_real_escape_string($_POST['password']);
+    $username = $dm->escape_string($_POST['username']);
+    $password = $dm->escape_string($_POST['password']);
     $user = $dm->getUserByUsername($username);
 
     if($user != NULL)
@@ -41,10 +41,10 @@ elseif (isset($_POST['submit-register']))
   $pass1 = $_POST['password1'];
   $pass2 = $_POST['password2'];
   // no errors, process registration
-  $username = mysql_real_escape_string($_POST['username']);
-  $email = mysql_real_escape_string($_POST['email']);
-  $pass1 = mysql_real_escape_string($pass1);
-  $pass2 = mysql_real_escape_string($pass2);
+  $username = $dm->escape_string($_POST['username']);
+  $email = $dm->escape_string($_POST['email']);
+  $pass1 = $dm->escape_string($pass1);
+  $pass2 = $dm->escape_string($pass2);
 
   // check if passwords match
   if($pass1 != $pass2)

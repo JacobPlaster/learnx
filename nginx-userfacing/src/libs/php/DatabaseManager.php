@@ -435,6 +435,18 @@ class DatabaseManager {
         return NULL;
     }
 
+
+
+    /*
+    * Creates a new video stream with the given data
+    */
+    function addVideoAndChatStream($data)
+    {
+      $this->addNewVideoStream($data['user_id'], $data['tag'], $data['title'], $data['description'], $this->randStrGen(12));
+      $this->addNewChatStream($data['user_id'], $data['tag']);
+    }
+
+
     /**
      *
      * Disconnects the service from the mysqli connection
@@ -452,6 +464,18 @@ class DatabaseManager {
     function generateSalt(){
         $result = "";
         $len = 12;
+        $chars = "abcdefghijklmnopqrstuvwxyz$?!-0123456789";
+        $charArray = str_split($chars);
+        for($i = 0; $i < $len; $i++){
+    	    $randItem = array_rand($charArray);
+    	    $result .= "".$charArray[$randItem];
+        }
+        return $result;
+    }
+
+    // generate randowm string
+    function randStrGen($len){
+        $result = "";
         $chars = "abcdefghijklmnopqrstuvwxyz$_?!-0123456789";
         $charArray = str_split($chars);
         for($i = 0; $i < $len; $i++){
@@ -459,6 +483,14 @@ class DatabaseManager {
     	    $result .= "".$charArray[$randItem];
         }
         return $result;
+    }
+
+    /*
+    * Escapes the given string
+    */
+    function escape_string($string)
+    {
+      return mysqli_real_escape_string($this->conn, $string);
     }
 }
 ?>

@@ -3,9 +3,12 @@ userfacing:
   ports:
     - "8000:80"
     - "443:443"
+  volumes:
+    - ./nginx-userfacing/src:/var/www/html/
   links:
-   - "db"
-   - "redis"
+     - "db"
+     - "redis"
+     - "nodejs"
 phpmyadmin:
   image: learnx-phpmyadmin
   ports:

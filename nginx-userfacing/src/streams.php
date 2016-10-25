@@ -37,7 +37,7 @@
             $LiveUsers = $dm->getAllOnlineLiveVideoStreams();
             foreach($LiveUsers as &$value)
             {
-              echo("<a href=\"/watch.php?tag=".$value->tag."\">".$value->username."</a> - ".$value->title);
+              echo("<a href=\"/watch.php?tag=".$value->tag."\">".$value->title."</a> - ".$value->username);
               echo("<br/>");
             }
 

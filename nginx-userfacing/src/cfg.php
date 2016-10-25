@@ -15,7 +15,7 @@
   $SERVER_CFG['SOCKET_PORT'] = "3000";
 
   $MEDIA_SERVER["HOST"] = "localhost";
-  $MEDIA_SERVER["PORT"] = "1935";
+  $MEDIA_SERVER["PORT"] = "8080";
 
   // ********* PATHS ********* //
 
@@ -29,6 +29,7 @@
   // Inserts
   $SERVER_PATH['inserts'] = $SERVER_PATH['libs-php'].'/inserts';
   $SERVER_PATH['inserts-404'] = $SERVER_PATH['inserts'].'/404.html';
+  $SERVER_PATH['inserts-403'] = $SERVER_PATH['inserts'].'/login.php';
   $SERVER_PATH['inserts-chat'] = $SERVER_PATH['inserts'].'/chat.php';
   $SERVER_PATH['inserts-error'] = $SERVER_PATH['inserts'].'/error.php';
   $SERVER_PATH['inserts-google-analytics'] = $SERVER_PATH['inserts'].'/google_analytics.php';
@@ -38,6 +39,7 @@
   $SERVER_PATH['inserts-stream-video'] = $SERVER_PATH['inserts'].'/stream_video.php';
   $SERVER_PATH['inserts-stream-chat'] = $SERVER_PATH['inserts'].'/stream_chat.php';
   $SERVER_PATH['inserts-loginreg-form'] = $SERVER_PATH['inserts'].'/loginreg_form.php';
+  $SERVER_PATH['inserts-payment-form'] = $SERVER_PATH['inserts'].'/payment_form.php';
   $SERVER_PATH['inserts-navbar-signedin'] = $SERVER_PATH['inserts'].'/navbar_signedin.php';
   $SERVER_PATH['inserts-navbar-notsigned'] = $SERVER_PATH['inserts'].'/navbar.php';
 
