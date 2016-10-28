@@ -12,7 +12,7 @@ userfacing:
 phpmyadmin:
   image: learnx-phpmyadmin
   ports:
-    - "8090:80"
+    - "8081:80"
   links:
     - "db"
 nodejs:
@@ -22,23 +22,44 @@ nodejs:
   links:
     - "redis"
     - "db"
-nginx-php:
-  build: ./nginx-rtmp/php-fpm
+
+
+
+nginx-origin-rtmp-fpm:
+  build: ./nginx-rtmp/rtmp-origin/nginx-fpm/
   ports:
-    - "8080:80"
+    - "8085:80"
     #- "443:443"
   environment:
     - HOST="localhost"
   links:
     - "db"
-
-nginx-rtmp:
-  build: ./nginx-rtmp/rtmp
+nginx-origin-rtmp:
+  build: ./nginx-rtmp/rtmp-origin/nginx-rtmp/
   ports:
-    - "8081:80"
+    - "8086:80"
     - "1935:1935"
   links:
-    - "nginx-php"
+    - "nginx-origin-rtmp-fpm"
+nginx-edge-rtmp-fpm:
+  build: ./nginx-rtmp/rtmp-edge/nginx-fpm/
+  ports:
+    - "8087:80"
+    #- "443:443"
+  environment:
+    - HOST="localhost"
+  links:
+    - "db"
+nginx-edge-rtmp:
+  build: ./nginx-rtmp/rtmp-edge/nginx-rtmp/
+  ports:
+    - "8088:80"
+    - "1935:1935"
+  links:
+    - "nginx-edge-rtmp-fpm"
+
+
+
 
 db:
   image: learnx-mysql

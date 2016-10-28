@@ -1,16 +1,28 @@
-nginx-php:
-  build: ./php-fpm
+nginx-origin-fpm:
+  build: ./rtmp-origin/nginx-fpm
   ports:
     - "8080:80"
     - "443:443"
   environment:
       - HOST="localhost"
-
-
-nginx-rtmp:
-  build: ./rtmp
+nginx-origin-rtmp:
+  build: ./rtmp-origin/nginx-rtmp
   ports:
-    - "8000:80"
+    - "8001:80"
     - "1935:1935"
   links:
-    - "nginx-php"
+    - "nginx-origin-fpm"
+nginx-edge-fpm:
+  build: ./rtmp-edge/nginx-fpm
+  ports:
+    - "8082:80"
+    - "443:443"
+  environment:
+      - HOST="localhost"
+nginx-edge-rtmp:
+  build: ./rtmp-edge/nginx-rtmp
+  ports:
+    - "8003:80"
+    - "1935:1935"
+  links:
+    - "nginx-origin-fpm"
