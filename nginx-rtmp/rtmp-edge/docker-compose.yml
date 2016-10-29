@@ -1,0 +1,12 @@
+nginx-edge-fpm:
+  build: ./nginx-fpm
+  ports:
+    - "8000:80"
+    - "443:443"
+nginx-edge-rtmp:
+  build: ./nginx-rtmp
+  ports:
+    - "8001:80"
+    - "1935:1935"
+  links:
+    - "nginx-edge-fpm"
