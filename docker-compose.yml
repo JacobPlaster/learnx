@@ -25,8 +25,24 @@ nodejs:
 
 
 
-nginx-origin-rtmp-fpm:
-  build: ./nginx-rtmp/rtmp-origin/nginx-fpm/
+#nginx-origin-rtmp-fpm:
+#  build: ./nginx-rtmp/rtmp-origin/nginx-fpm/
+#  ports:
+#    - "8085:80"
+#    #- "443:443"
+#  environment:
+#    - HOST="localhost"
+#  links:
+#    - "db"
+#nginx-origin-rtmp:
+#  build: ./nginx-rtmp/rtmp-origin/nginx-rtmp/
+#  ports:
+#    - "8086:80"
+#    - "1935:1935"
+#  links:
+#    - "nginx-origin-rtmp-fpm"
+nginx-edge-rtmp-fpm:
+  build: ./nginx-rtmp/rtmp-edge/nginx-fpm/
   ports:
     - "8085:80"
     #- "443:443"
@@ -34,29 +50,13 @@ nginx-origin-rtmp-fpm:
     - HOST="localhost"
   links:
     - "db"
-nginx-origin-rtmp:
-  build: ./nginx-rtmp/rtmp-origin/nginx-rtmp/
+nginx-edge-rtmp:
+  build: ./nginx-rtmp/rtmp-edge/nginx-rtmp/
   ports:
     - "8086:80"
     - "1935:1935"
   links:
-    - "nginx-origin-rtmp-fpm"
-#nginx-edge-rtmp-fpm:
-#  build: ./nginx-rtmp/rtmp-edge/nginx-fpm/
-#  ports:
-#    - "8087:80"
-    #- "443:443"
-#  environment:
-#    - HOST="localhost"
-#  links:
-#    - "db"
-#nginx-edge-rtmp:
-#  build: ./nginx-rtmp/rtmp-edge/nginx-rtmp/
-#  ports:
-#    - "8088:80"
-#    - "1935:1935"
-#  links:
-#    - "nginx-edge-rtmp-fpm"
+    - "nginx-edge-rtmp-fpm"
 
 
 

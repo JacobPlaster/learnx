@@ -15,7 +15,7 @@
   $SERVER_CFG['SOCKET_PORT'] = "3000";
 
   $MEDIA_SERVER["HOST"] = "localhost";
-  $MEDIA_SERVER["PORT"] = "8081";
+  $MEDIA_SERVER["PORT"] = "8086";
 
   // ********* PATHS ********* //
 
