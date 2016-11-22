@@ -11,13 +11,15 @@ var appRouter = function(app) {
    app.get("/edge_redirect", function(req, res) {
     //  res.send("test");
       //res.redirect('rtmp://138.68.131.239:1935/origin/'+req.query.name);
-      console.log(req.query);
+      console.log(req);
       res.redirect('rtmp://138.68.131.239:1935/origin/test');
    });
 
    app.get('/edge_redirect/:name', function(req , res){
-        res.redirect('rtmp://138.68.131.239:1935/origin/'+req.params.name);
+      console.log(req);
+      res.redirect('rtmp://138.68.131.239:1935/origin/'+req.params.name);
     });
+
 
 }
 module.exports = appRouter;
