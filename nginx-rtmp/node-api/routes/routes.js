@@ -8,10 +8,12 @@ var appRouter = function(app) {
     	res.send("On play.");
    });
 
-   /*app.get("/edge_redirect", function(req, res) {
+   app.get("/edge_redirect", function(req, res) {
     //  res.send("test");
-      res.redirect('rtmp://138.68.131.239:1935/origin/'+req.query.name);
-   });*/
+      //res.redirect('rtmp://138.68.131.239:1935/origin/'+req.query.name);
+      console.log(req.query);
+      res.redirect('rtmp://138.68.131.239:1935/origin/test');
+   });
 
    app.get('/edge_redirect/:name', function(req , res){
         res.redirect('rtmp://138.68.131.239:1935/origin/'+req.params.name);
