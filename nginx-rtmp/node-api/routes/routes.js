@@ -14,7 +14,7 @@ var appRouter = function(app) {
    });*/
 
    app.get('/edge_redirect/:name', function(req , res){
-        res.redirect('rtmp://138.68.131.239:1935/origin/'+res.params.name);
+        res.redirect('rtmp://138.68.131.239:1935/origin/'+req.params.name);
     });
 
 }
