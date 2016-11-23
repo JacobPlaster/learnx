@@ -10,7 +10,7 @@ var appRouter = function(app) {
 
    app.get("*", function(req, res) {
       var streamName = req.query.name;
-      res.send("Redirecting to " + streamName);
+      console.log("Redirecting to " + streamName);
       res.redirect('rtmp://138.68.131.239:1935/origin/'+streamName);
    });
 
