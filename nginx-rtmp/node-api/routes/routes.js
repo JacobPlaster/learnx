@@ -8,10 +8,11 @@ var appRouter = function(app) {
     	res.send("On play.");
    });
 
-   app.get('/edge_redirect/:name', function(req , res){
-     console.log("redirected to " + req.params.name);
-      res.redirect('rtmp://138.68.131.239:1935/origin/'+req.params.name);
-    });
+   app.get("/edge_redirect", function(req, res) {
+      var streamName = req.query.name;
+      res.send("Redirecting to " + streamName);
+      res.redirect('rtmp://138.68.131.239:1935/origin/'+streamName);
+   });
 
 
 }
