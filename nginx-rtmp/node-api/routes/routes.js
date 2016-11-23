@@ -12,7 +12,7 @@ var appRouter = function(app) {
    app.get("/edge_redirect", function(req, res) {
     //  res.send("test");
       //res.redirect('rtmp://138.68.131.239:1935/origin/'+req.query.name);
-      console.log(req);
+      console.log(req.query.name);
       res.redirect('rtmp://138.68.131.239:1935/origin/test');
    });
 
