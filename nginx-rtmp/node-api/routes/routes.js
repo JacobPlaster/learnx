@@ -13,18 +13,18 @@ var appRouter = function(app) {
       //res.redirect('rtmp://138.68.131.239:1935/origin/'+req.query.name);
       console.log(req.url);
       res.redirect('rtmp://138.68.131.239:1935/origin/test');
-   });
+   }); */
 
    app.get('/edge_redirect/:name', function(req , res){
       console.log(req);
       res.redirect('rtmp://138.68.131.239:1935/origin/'+req.params.name);
-    }); */
+    });
 
-  app.get('*', function(req , res){
+  /*app.get('*', function(req , res){
       console.log(req + "/n/n/n/n/n");
      console.log(req);
      res.redirect('rtmp://138.68.131.239:1935/origin/test');
-   });
+   });*/
 
 
 }
