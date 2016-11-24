@@ -25,6 +25,6 @@ var appRouter = function(app) {
      // check if stream exists
      // find best to redirect to
      res.redirect('rtmp://138.68.135.81:1935/edge/test');
-   }); 8?
+   }); */
 }
 module.exports = appRouter;
