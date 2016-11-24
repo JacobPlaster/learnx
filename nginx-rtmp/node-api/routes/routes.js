@@ -21,6 +21,7 @@ var appRouter = function(app) {
      // check if allowed to play
      // check if stream exists
      // find best to redirect to
+     console.log(req);
      res.redirect('http://138.68.131.239/hls/'+streamName+'.m3u8');
    });
 }
