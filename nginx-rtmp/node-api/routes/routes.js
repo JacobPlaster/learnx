@@ -1,6 +1,6 @@
 var appRouter = function(app) {
 
-   app.get("/on_publish", function(req, res) {
+  /* app.get("/on_publish", function(req, res) {
     	res.send("On publish.");
    });
 
@@ -14,6 +14,15 @@ var appRouter = function(app) {
      // check if stream exists
      // find best to redirect to
      console.log(req);
+     res.redirect('rtmp://138.68.135.81:1935/edge/'+streamName);
+   }); */
+
+   app.get("/", function(req, res) {
+     console.log(req);
+     var streamName = req.query.name;
+     // check if allowed to play
+     // check if stream exists
+     // find best to redirect to
      res.redirect('rtmp://138.68.135.81:1935/edge/'+streamName);
    });
 }
