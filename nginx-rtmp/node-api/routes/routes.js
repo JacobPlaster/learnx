@@ -1,6 +1,6 @@
 var appRouter = function(app) {
 
-  app.get("/on_publish", function(req, res) {
+  /*app.get("/on_publish", function(req, res) {
     	res.send("On publish.");
    });
 
@@ -15,13 +15,13 @@ var appRouter = function(app) {
      // find best to redirect to
      console.log(req);
      res.redirect('rtmp://138.68.135.81:1935/edge/'+streamName);
-   });
+   }); */
 
-   app.post('/', function(req, res) {
-    console.log(req);
-    var name = req.body.name;
-    res.redirect('rtmp://138.68.135.81:1935/edge/'+streamName);
-});
+   app.post('/origin_to_edge', function(req, res) {
+      console.log(req);
+      var name = req.body.name;
+      res.redirect('rtmp://138.68.135.81:1935/edge/'+streamName);
+    });
 
    /*
    app.get("/", function(req, res) {
