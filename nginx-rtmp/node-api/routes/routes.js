@@ -19,7 +19,8 @@ var appRouter = function(app) {
 
    app.post('/origin_to_edge', function(req, res) {
       console.log(req);
-      var name = req.body.name;
+      //var streamName = req.body.name;
+      var streamName = "test";
       res.redirect('rtmp://138.68.135.81:1935/edge/'+streamName);
     });
 
