@@ -29,8 +29,8 @@ RUN cd /src && wget http://nginx.org/download/nginx-1.9.9.tar.gz && tar zxf ngin
 RUN cd /src && wget https://github.com/arut/nginx-rtmp-module/archive/v1.1.6.tar.gz && tar zxf v1.1.6.tar.gz && rm v1.1.6.tar.gz
 
 # compile nginx
-RUN cd /src/nginx-1.6.2 && ./configure --add-module=/src/nginx-rtmp-module-1.1.6 --with-debug --conf-path=/config/nginx.conf --error-log-path=/logs/error.log --http-log-path=/logs/access.log
-RUN cd /src/nginx-1.6.2 && make && make install
+RUN cd /src/nginx-1.9.9 && ./configure --add-module=/src/nginx-rtmp-module-1.1.6 --with-debug --conf-path=/config/nginx.conf --error-log-path=/logs/error.log --http-log-path=/logs/access.log
+RUN cd /src/nginx-1.9.9 && make && make install
 
 ADD nginx.conf /config/nginx.conf
 ADD static /static
