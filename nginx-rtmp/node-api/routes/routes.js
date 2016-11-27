@@ -23,6 +23,11 @@ var appRouter = function(app) {
       res.redirect('rtmp://138.68.135.81:1935/edge/'+streamName);
     });
 
+    app.post('/test', function(req, res) {
+       console.log(req);
+       var name = req.body.name;
+     });
+
    /*
    app.get("/", function(req, res) {
      console.log(req);
