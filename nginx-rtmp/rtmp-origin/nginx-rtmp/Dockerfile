@@ -23,7 +23,7 @@ RUN apt-get install -y libpcre3-dev zlib1g-dev libssl-dev
 RUN apt-get install -y wget
 
 # get nginx source
-RUN cd /src && wget http://nginx.org/download/nginx-1.6.2.tar.gz && tar zxf nginx-1.6.2.tar.gz && rm nginx-1.6.2.tar.gz
+RUN cd /src && wget http://nginx.org/download/nginx-1.9.9.tar.gz && tar zxf nginx-1.9.9.tar.gz && rm nginx-1.9.9.tar.gz
 
 # get nginx-rtmp module
 RUN cd /src && wget https://github.com/arut/nginx-rtmp-module/archive/v1.1.6.tar.gz && tar zxf v1.1.6.tar.gz && rm v1.1.6.tar.gz
