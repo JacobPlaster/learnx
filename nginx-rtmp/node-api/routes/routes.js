@@ -17,6 +17,7 @@ var appRouter = function(app) {
      res.redirect('rtmp://138.68.135.81:1935/edge/'+streamName);
    }); */
 
+   // on pubish is post request
    app.post('/origin_to_edge', function(req, res) {
       console.log(req);
       //var streamName = req.body.name;
@@ -24,10 +25,13 @@ var appRouter = function(app) {
       res.redirect('rtmp://138.68.135.81:1935/edge/'+streamName);
     });
 
-    app.post('/test', function(req, res) {
-       console.log(req);
-       var name = req.body.name;
-     });
+    app.get("/edge_rtmp_redirect", function(req, res) {
+      var streamName = req.query.name;
+      // check if allowed to play
+      // check if stream exists
+      // find best to redirect to
+      res.redirect('rtmp://138.68.131.239:1935/origin_rtmp/'+streamName);
+    });
 
    /*
    app.get("/", function(req, res) {
