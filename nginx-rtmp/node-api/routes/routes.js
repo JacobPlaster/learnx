@@ -33,6 +33,14 @@ var appRouter = function(app) {
       res.redirect('rtmp://138.68.131.239:1935/origin_rtmp/'+streamName);
     });
 
+    app.get("/edge_hls_redirect", function(req, res) {
+      var streamName = req.query.name;
+      // check if allowed to play
+      // check if stream exists
+      // find best to redirect to
+      res.redirect('http://138.68.131.239/hls/'+streamName+".m3u8");
+    });
+
    /*
    app.get("/", function(req, res) {
      console.log(req);
