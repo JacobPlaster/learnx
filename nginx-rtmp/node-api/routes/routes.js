@@ -47,7 +47,7 @@ var appRouter = function(app) {
      // check if allowed to play
      // check if stream exists
      // find best to redirect to
-     res.redirect('rtmp://138.68.135.81:1935/edge/test');
+     res.redirect('http://138.68.131.239/hls/test.m3u8');
    });
 }
 module.exports = appRouter;
