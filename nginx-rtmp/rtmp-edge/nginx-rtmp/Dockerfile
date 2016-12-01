@@ -36,4 +36,9 @@ RUN cd /src/nginx-1.6.2 && make && make install
 ADD nginx.conf /config/nginx.conf
 ADD static /static
 
+RUN mkdir /var/www
+RUN mkdir /var/www/hls-test1
+RUN mkdir /var/www/hls-test1/cache
+RUN mkdir /var/www/hls-test1/temp
+
 CMD "nginx"
