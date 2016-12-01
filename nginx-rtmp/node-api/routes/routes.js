@@ -41,7 +41,6 @@ var appRouter = function(app) {
       res.redirect('http://138.68.131.239/hls/'+streamName+".m3u8");
     });
 
-   /*
    app.get("/", function(req, res) {
      console.log(req);
 
@@ -49,6 +48,6 @@ var appRouter = function(app) {
      // check if stream exists
      // find best to redirect to
      res.redirect('rtmp://138.68.135.81:1935/edge/test');
-   }); */
+   });
 }
 module.exports = appRouter;
