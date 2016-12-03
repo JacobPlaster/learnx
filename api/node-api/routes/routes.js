@@ -17,10 +17,11 @@ var appRouter = function(app) {
     }); */
 
     app.post('/internal/publish_authentication', function(req, res) {
-      var streamName = req.body.name;
+      //var streamName = req.body.name;
+      var streamName = "test";
       res.send('Authentication for ' + streamName + " is successfull.");
       console.log("Authentication success: " + streamName);
-      console.log(req.query);
+      console.log(req.body);
      });
 
      /*
