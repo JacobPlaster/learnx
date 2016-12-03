@@ -2,6 +2,11 @@ var request = require('request');
 
 var appRouter = function(app) {
 
+
+    // CHECK USER HAS PERMISSION FOR THESE
+    // look into session tokens
+
+
      // on publish is post
      app.get('/api/drop_stream', function(req, res) {
        var streamName = req.query.name;

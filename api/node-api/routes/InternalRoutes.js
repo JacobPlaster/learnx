@@ -27,7 +27,6 @@ var appRouter = function(app) {
        var streamName = "test";
        res.send('Authentication for ' + streamName + " is successfull.");
        console.log("Authentication success: " + streamName);
-       console.log(req.body);
       });
 }
 module.exports = appRouter;
