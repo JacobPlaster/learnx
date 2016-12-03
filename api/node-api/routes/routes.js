@@ -16,12 +16,20 @@ var appRouter = function(app) {
       res.redirect('rtmp://138.68.131.239:1935/origin_rtmp/'+streamName);
     }); */
 
+    app.post('/internal/publish_authentication', function(req, res) {
+      var streamName = req.body.name;
+      res.send('Authentication for ' + streamName + " is successfull.");
+      console.log("Authentication success: " + streamName);
+      console.log(req.query);
+     });
+
+     /*
     app.get("/internal/publish_authentication", function(req, res) {
       var streamName = req.query.name;
       res.send('Authentication for ' + streamName + " is successfull.");
       console.log("Authentication success: " + streamName);
       console.log(req.query);
 
-    });
+    }); */
 }
 module.exports = appRouter;
