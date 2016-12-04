@@ -25,11 +25,11 @@ How to use
 
  TODO:
   - Add Oauth2 to API (https://github.com/lelylan/simple-oauth2)
-  - Change streaming edges to use ENVIRONMENT_VARIABLES instead of hard coded host ip's
   - Change publish_authentication in api to use POST.name
-
   - Remake userfacing server maybe use nodejs
-  -
+
+DONE:
+  - Change streaming edges to use ENVIRONMENT_VARIABLES instead of hard coded host ip's
 
 
 Links

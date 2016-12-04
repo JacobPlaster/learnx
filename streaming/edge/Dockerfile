@@ -2,6 +2,7 @@ FROM ubuntu:trusty
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV PATH $PATH:/usr/local/nginx/sbin
+ENV PULL_HOST http://138.68.131.239:80;
 
 EXPOSE 1935
 EXPOSE 80
@@ -40,5 +41,9 @@ RUN mkdir /var/www
 RUN mkdir /var/www/hls-test1
 RUN mkdir /var/www/hls-test1/cache
 RUN mkdir /var/www/hls-test1/temp
+
+COPY docker-entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD "nginx"
