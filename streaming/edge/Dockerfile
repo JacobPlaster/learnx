@@ -38,9 +38,9 @@ ADD nginx.conf /config/nginx.conf
 ADD static /static
 
 RUN mkdir /var/www
-RUN mkdir /var/www/hls-test1
-RUN mkdir /var/www/hls-test1/cache
-RUN mkdir /var/www/hls-test1/temp
+RUN mkdir /var/www/edge
+RUN mkdir /var/www/edge/cache
+RUN mkdir /var/www/edge/temp
 
 COPY docker-entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
